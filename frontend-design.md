@@ -1,5 +1,7 @@
 # frontend-design
 
+[![Quillx](https://raw.githubusercontent.com/qainsights/Quillx/main/badges/quillx-4.svg)](https://github.com/qainsights/Quillx)
+
 A Claude skill for creating distinctive, production-grade frontend interfaces. Replaces the built-in skill of the same name with an opinionated design ethos rooted in beautiful minimalism.
 
 ## What it does

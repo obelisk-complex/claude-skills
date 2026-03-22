@@ -1,5 +1,7 @@
 # cosmos-compose
 
+[![Quillx](https://raw.githubusercontent.com/qainsights/Quillx/main/badges/quillx-4.svg)](https://github.com/qainsights/Quillx)
+
 A Claude skill for generating cosmos-compose.json files and administering Cosmos Cloud, a self-hosted container management platform.
 
 ## What it does

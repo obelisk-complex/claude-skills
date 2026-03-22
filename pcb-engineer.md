@@ -1,5 +1,7 @@
 # pcb-engineer
 
+[![Quillx](https://raw.githubusercontent.com/qainsights/Quillx/main/badges/quillx-4.svg)](https://github.com/qainsights/Quillx)
+
 A Claude skill for PCB design and circuit engineering, covering the full product lifecycle from initial consulting through to manufacturing file preparation.
 
 ## What it does

@@ -1,5 +1,7 @@
 # 3d-print-design
 
+[![Quillx](https://raw.githubusercontent.com/qainsights/Quillx/main/badges/quillx-4.svg)](https://github.com/qainsights/Quillx)
+
 A Claude skill for designing 3D-printable parts, enclosures, and mechanical components, covering the full workflow from requirements through CAD modelling, DFM, and manufacturing export.
 
 ## What it does

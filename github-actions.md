@@ -1,5 +1,7 @@
 # github-actions
 
+[![Quillx](https://raw.githubusercontent.com/qainsights/Quillx/main/badges/quillx-4.svg)](https://github.com/qainsights/Quillx)
+
 A Claude skill for generating production-grade GitHub Actions workflows, reusable workflows, composite actions, and custom JavaScript/Docker actions.
 
 ## What it does

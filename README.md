@@ -1,6 +1,6 @@
-[![Quillx](https://raw.githubusercontent.com/qainsights/Quillx/main/badges/quillx-3.svg)](https://github.com/qainsights/Quillx)
-
 # claude-skills
+
+[![Quillx](https://raw.githubusercontent.com/qainsights/Quillx/main/badges/quillx-4.svg)](https://github.com/qainsights/Quillx)
 
 A collection of custom skills for Claude, built to fill gaps in the default toolset and encode opinionated best practices.
 
