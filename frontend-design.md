@@ -2,18 +2,38 @@
 
 [![Quillx](https://raw.githubusercontent.com/qainsights/Quillx/main/badges/quillx-4.svg)](https://github.com/qainsights/Quillx)
 
-A Claude skill for creating distinctive, production-grade frontend interfaces. Replaces the built-in skill of the same name with an opinionated design ethos rooted in beautiful minimalism.
+A Claude skill for creating distinctive, production-grade frontend interfaces. Replaces the built-in skill of the same name with an opinionated design ethos rooted in beautiful minimalism, accessibility, and UX clarity.
 
 ## What it does
 
-Generates creative, polished frontend code and UI design that avoids generic AI aesthetics. Claude acts as a confident design recommender who defers to the user as final arbiter, rather than hedging or deferring aesthetic decisions.
+Generates creative, polished frontend code and UI design that avoids generic AI aesthetics. Claude acts as a confident design recommender who defers to the user as final arbiter, explaining design reasoning and pushing back on choices that harm the interface. Educates the user along the way, citing design principles, terminology, and history (Fitts's Law, Gestalt principles, type scale ratios, F-pattern scanning) when opportunities arise naturally.
+
+## Hierarchy of concerns
+
+When concerns conflict, the one listed first wins.
+
+1. **Accessibility** (WCAG 2.2 AA)
+2. **Readability**
+3. **Clarity**
+4. **Performance**
+5. **Aesthetics**
+
+## Standards and frameworks
+
+- **WCAG 2.2 Level AA**: the current W3C recommendation (ISO/IEC 40500:2025), including the six new AA criteria: focus not obscured, focus appearance, minimum target size (24x24px), dragging alternatives, consistent help, and accessible authentication
+- **Nielsen's usability heuristics**: system status visibility, recognition over recall, error prevention over error handling, user control and freedom
+- **Relative units** (`rem`/`em`) for font sizing, ensuring 200% text scaling compliance
+
+## UX prime directive
+
+Fewer clicks is better, and users should be able to accomplish tasks via multiple paths. Menus, search, keyboard shortcuts, direct manipulation: do not force everyone through the same funnel.
 
 ## Design principles
 
-- **Accessibility and readability** are non-negotiable requirements
 - **Beautiful minimalism** as the baseline aesthetic
-- **Restrained dynamism**: one personality "moment" per page plus functional feedback transitions (the cocktail bitters rule - two to four dashes is perfect, the whole bottle ruins the drink)
-- **Educate as you go**: shares design reasoning using industry terminology and history (Fitts's Law, Gestalt principles, type scale ratios, F-pattern scanning) when opportunities arise naturally
+- **Restrained dynamism**: one personality "moment" per page plus functional feedback transitions (the cocktail bitters rule: two to four dashes is perfect, the whole bottle ruins the drink)
+- **System status**: every user action gets visible feedback within 100ms; loading states, progress indicators, and confirmation messages are mandatory
+- **Error prevention**: constrained inputs, disabled unavailable actions, and confirmation for destructive operations, prioritised over error messages
 
 ## Blacklisted AI design tropes
 
@@ -26,10 +46,11 @@ The skill explicitly prohibits:
 - Decorative SVG blobs
 - Excessive border-radius
 - Dark mode with neon accents
+- Hero sections with oversized bold heading + subtitle + two buttons (unless differentiated)
 
 ## Review mode
 
-When reviewing or auditing existing frontend code and design, produces a downloadable markdown recommendations file.
+When reviewing or auditing existing frontend code and design, evaluates findings in priority order (accessibility, readability, UX, AI tropes, performance, aesthetics) and produces a downloadable markdown recommendations file.
 
 ## Style rule
 

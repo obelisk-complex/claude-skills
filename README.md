@@ -9,7 +9,7 @@ A collection of custom skills for Claude, built to fill gaps in the default tool
 | Skill | Description |
 |---|---|
 | [code-quality](/code-quality.md) | Language-agnostic code standards, review mode, and testing guidance. Refuses to write code it considers wrong. |
-| [frontend-design](/frontend-design.md) | Production-grade frontend interfaces with a beautiful minimalist design ethos. Replaces the built-in skill. |
+| [frontend-design](/frontend-design.md) | UX-first frontend interfaces with WCAG 2.2 AA, Nielsen's heuristics, minimalist design, and an AI tropes blacklist. Replaces the built-in skill. |
 | [github-actions](/github-actions.md) | CI/CD workflows, reusable workflows, composite actions, and custom actions with security baked in. |
 | [pcb-engineer](/pcb-engineer.md) | Full PCB design lifecycle from consulting through manufacturing prep. KiCad 8+, educational by default. |
 | [3d-print-design](/3d-print-design.md) | 3D-printable parts and enclosures across FDM, resin, SLS, and metal processes. Pairs with pcb-engineer. |
