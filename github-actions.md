@@ -23,8 +23,8 @@ The skill enforces best practices by default:
 
 ## Includes
 
-- **SKILL.md** (~430 lines): core principles, workflow structure, matrix builds, reusable workflows, composite actions, custom actions, self-hosted runners, debugging guide, security checklist
-- **references/recipes.md** (~430 lines): 12 copy-adaptable recipes for Python CI, Docker build/push, Perl CI, multi-platform containers, release automation, OIDC deploys (AWS/GCP/Azure), Dependabot auto-merge, CodeQL scanning, Terraform plan/apply, Node/TypeScript CI
+- **SKILL.md** (~510 lines): core principles, workflow structure, matrix builds, reusable workflows, composite actions, custom actions, self-hosted runners, debugging guide, security checklist, review mode
+- **references/recipes.md** (~530 lines): 12 copy-adaptable recipes for Python CI, Docker build/push, Perl CI, multi-platform containers, release automation, OIDC deploys (AWS/GCP/Azure), Dependabot auto-merge, CodeQL scanning, Terraform plan/apply, Node/TypeScript CI
 
 ## Ecosystem coverage
 
