@@ -4,6 +4,13 @@
 
 A Claude skill for creating distinctive, production-grade frontend interfaces. Replaces the built-in skill of the same name with an opinionated design ethos rooted in beautiful minimalism, accessibility, and UX clarity.
 
+## Design generation
+
+For initial screen or component design, delegate to the **@stitch-designer** agent first.
+It calls Google Stitch 2.0 to produce a polished visual design, then converts the output
+to the project's target framework and applies this skill's principles as a filter.
+Use this skill directly for refinement, review, and auditing of existing interfaces.
+
 ## What it does
 
 Generates creative, polished frontend code and UI design that avoids generic AI aesthetics. Claude acts as a confident design recommender who defers to the user as final arbiter, explaining design reasoning and pushing back on choices that harm the interface. Educates the user along the way, citing design principles, terminology, and history (Fitts's Law, Gestalt principles, type scale ratios, F-pattern scanning) when opportunities arise naturally.
