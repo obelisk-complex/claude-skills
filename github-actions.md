@@ -33,3 +33,37 @@ Ecosystem-agnostic with specific knowledge for Python, Docker, Perl, Node/TypeSc
 ## Licence
 
 MIT
+
+## Verification Gate (Iron Law)
+
+**NO WORKFLOW WITHOUT TESTING**
+
+Before claiming any GitHub Actions workflow is correct:
+1. **SYNTAX VALIDATION**: Validate YAML structure and GitHub Actions schema
+2. **DRY RUN**: Use `act` or similar tools to test workflow locally when possible
+3. **LOG INSPECTION**: Examine actual execution logs for errors and warnings
+4. **DEPENDENCY CHECK**: Verify all actions resolve to correct versions and are available
+5. **ONLY THEN**: Consider the workflow ready for use
+
+*Skipping any step = unverified workflow.*
+
+## Red Flags - STOP
+
+| Excuse | Reality |
+|--------|---------|
+| "The YAML is valid" | Valid YAML ≠ valid GitHub Actions workflow |
+| "It works on my machine" | Runner environments differ significantly from local dev |
+| "Similar workflows worked before" | Small changes can break complex workflows |
+| "I'll monitor it in production" | Production monitoring catches issues too late |
+| "It's just a YAML file" | Workflow defects can cause security breaches or data loss |
+
+## Guiding Principles
+
+- **Security first**: Assume hostile environment - validate inputs, use least privilege
+- **Fail fast**: Configure timeouts and concurrency limits to prevent resource exhaustion
+- **Cache wisely**: Implement effective caching strategies to improve performance
+- **Matrix test thoughtfully**: Only test matrix combinations that are actually needed
+- **Document assumptions**: Comment non-obvious decisions and workarounds
+- **Version pinning**: Always pin action versions to prevent supply chain attacks
+- **Environment promotion**: Use environments with protection rules for promotions
+- **Monitoring integration**: Integrate with monitoring and alerting systems

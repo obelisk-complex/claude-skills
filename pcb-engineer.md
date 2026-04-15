@@ -33,6 +33,39 @@ Designed to be maximally educational, explaining the reasoning behind every desi
 
 Pairs with [3d-print-design](#) for enclosure design. The 3D print skill cross-references this one for board dimensions and mounting hole positions.
 
+## Verification Gate (Iron Law)
+
+**NO DESIGN DECISION WITHOUT VERIFICATION**
+
+Before claiming any PCB design is correct:
+1. **SCHEMATIC CHECK**: Verify all connections match the schematic
+2. **DRC RUN**: Execute Design Rule Check with appropriate parameters
+3. **ERC RUN**: Execute Electrical Rule Check for power/net issues
+4. **MANUAL REVIEW**: Visually inspect critical areas (power, high-speed, RF)
+5. **ONLY THEN**: Consider the design ready for manufacturing
+
+*Skipping any step = unverified design.*
+
+## Red Flags - STOP
+
+| Excuse | Reality |
+|--------|---------|
+| "The autorouter handled it" | Auto-routers often violate design rules for complex boards |
+| "It compiles without errors" | Schematic capture tools don't catch all electrical issues |
+| "Similar designs worked before" | Every design is unique - context matters |
+| "The fab house will catch it" | Shifting responsibility doesn't eliminate risk |
+| "I'll verify in the next revision" | Fixing issues post-fab is 10x more expensive |
+
+## Guiding Principles
+
+- **Design for manufacturability**: Consider fabrication and assembly constraints early
+- **Signal integrity matters**: Control impedance, proper termination, and return paths
+- **Power integrity is critical**: Proper decoupling and plane design prevent issues
+- **Test points are essential**: Include adequate test points for debugging and validation
+- **Document everything**: Future you (or colleagues) will thank present you
+- **Verify assumptions**: Never guess about component footprints or pinouts
+- **Design defensively**: Add margin for component tolerances and environmental factors
+
 ## Licence
 
 MIT

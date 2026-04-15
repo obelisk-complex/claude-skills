@@ -27,6 +27,42 @@ Designed for users who are not professional developers but rely on Claude to mak
 - Reviews produce a self-contained markdown file someone can read without the conversation
 - Comments explain *why*, not *what* -- well-named code is self-documenting
 
+## Verification Gate (Iron Law)
+
+**NO FINDING WITHOUT VERIFICATION IN CONTEXT**
+
+Before claiming any issue exists:
+1. **IDENTIFY**: What specific evidence proves this is a real problem?
+2. **RUN**: Execute the full verification (compiler, linter, tests)
+3. **READ**: Check output for false positives
+4. **VERIFY**: Does the issue hold up when examined in surrounding code?
+5. **ONLY THEN**: Report the finding
+
+*Skipping any step = unverified, not a finding.*
+
+## Red Flags - STOP
+
+| Excuse | Reality |
+|--------|---------|
+| "The linter already confirmed it" | Linter confirms the pattern exists, not that it's a real issue in context |
+| "The issue is obvious" | Obvious patterns often have false positives - verify each one |
+| "Running tests would take too long" | An issue without test evidence is an assumption, not a finding |
+| "The code looks correct enough" | "Correct enough" is not a standard - verify or don't report |
+| "I'll note it as a potential issue" | Potential issues belong in notes, not formal findings |
+
+## Guiding Principles
+
+- **Warnings are errors**: Never suppress, silence, or ignore warnings - find and fix the root cause
+- **Do the harder fix if it's the better fix**: Don't take shortcuts that produce a worse product
+- **Leave no trash behind**: Remove dead code, stale comments, unused imports, debug leftovers
+- **Comment only where needed**: Explain *why* non-obvious choices were made, don't narrate what the code does
+- **Fix all severities**: Address Low and Info findings now, don't defer them
+- **Verify before trusting assumptions**: Never guess - use concrete evidence
+- **Test what you change**: Run the test suite before reporting success
+- **Don't invent abstractions**: Three similar lines are better than premature helpers
+- **Secure by default**: Never suggest insecure patterns for convenience
+- **Audit outputs, not just inputs**: Check compiler warnings, linter output, and test results - reality over intention
+
 ## Licence
 
 MIT

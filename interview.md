@@ -34,3 +34,39 @@ Designed for use before any non-trivial build task. The skill auto-calibrates in
 ## Also available as
 
 The interview skill has a corresponding [interview agent](https://github.com/obelisk-complex/claude-agents/blob/main/agents/interview.md) for use in contexts where sub-agent spawning is preferred over inline expansion (saves context window in long sessions).
+
+## Licence
+
+MIT
+
+## Verification Gate (Iron Law)
+
+**NO ASSUMPTION WITHOUT EVIDENCE**
+
+Before recording any assumption or requirement:
+1. **CROSS-CHECK**: Verify against multiple sources when possible
+2. **CONFIRMATION**: Seek explicit confirmation from stakeholder when uncertainty exists
+3. **DOCUMENTATION**: Reference specific evidence (docs, code, data) supporting the assumption
+4. **ONLY THEN**: Record the assumption with appropriate confidence level
+
+*Skipping any step = unverified assumption.*
+
+## Red Flags - STOP
+
+| Excuse | Reality |
+|--------|---------|
+| "The stakeholder implied it" | Implied requirements lead to misinterpretation and rework |
+| "It's common practice" | Common practices may not apply to this specific context |
+| "We can change it later" | Requirements changes become exponentially more expensive over time |
+| "The code already does it" | Verify actual behavior - don't assume based on code inspection |
+| "I'll document it properly later" | Undocumented assumptions create knowledge debt and risk |
+
+## Guiding Principles
+
+- **Trust but verify**: Always seek confirmation for critical assumptions
+- **Precision over completeness**: Better to have fewer confirmed requirements than many uncertain ones
+- **Context matters**: Requirements that work in one context may fail in another
+- **Traceability**: Every requirement should be traceable to a source or stakeholder
+- **Assumption tracking**: Clearly label and track all assumptions for future review
+- **Iterative refinement**: Treat requirements discovery as an iterative process
+- **Bias awareness**: Actively work to overcome confirmation and availability biases

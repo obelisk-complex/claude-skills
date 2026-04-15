@@ -27,3 +27,36 @@ Generates cosmos-compose.json files for importing container configurations into 
 ## Licence
 
 MIT
+
+## Verification Gate (Iron Law)
+
+**NO CONFIGURATION WITHOUT VALIDATION**
+
+Before claiming any cosmos-compose configuration is correct:
+1. **SYNTAX CHECK**: Validate JSON structure is valid
+2. **SCHEMA CHECK**: Verify against official cosmos-compose schema
+3. **DEPLOYMENT TEST**: Attempt to deploy in a test environment
+4. **HEALTH CHECK**: Confirm all services are running and accessible
+5. **ONLY THEN**: Consider the configuration ready for production
+
+*Skipping any step = unverified configuration.*
+
+## Red Flags - STOP
+
+| Excuse | Reality |
+|--------|---------|
+| "It parses as valid JSON" | Valid JSON ≠ valid cosmos-compose configuration |
+| "It worked in development" | Dev/prod parity issues are common in container platforms |
+| "The documentation example was similar" | Examples may not cover your specific use case |
+| "I'll test it in production" | Production is not the place for initial validation |
+| "It's just a small change" | Small changes can have cascading effects in interconnected systems |
+
+## Guiding Principles
+
+- **Infrastructure as code**: Treat configurations with the same rigor as application code
+- **Immutable infrastructure**: Prefer replacing configurations over modifying in-place
+- **Version control everything**: Track changes to configurations like any other code artifact
+- **Environment parity**: Keep development, staging, and production environments as similar as possible
+- **Secrets management**: Never hardcode secrets - use proper secret management systems
+- **Health checks are essential**: Configure proper liveness and readiness probes for all services
+- **Resource limits matter**: Define appropriate CPU/memory limits to prevent resource exhaustion

@@ -63,6 +63,29 @@ When reviewing or auditing existing frontend code and design, evaluates findings
 
 Em-dashes are banned in all interface copy without exception. Any sentence that requires one gets rewritten.
 
+## Verification Gate (Iron Law)
+
+**NO DESIGN DECISION WITHOUT EVIDENCE**
+
+Before claiming any design issue exists:
+1. **IDENTIFY**: What specific evidence proves this is a real usability/accessibility problem?
+2. **CHECK**: Run automated accessibility audits (axe, Lighthouse, etc.)
+3. **TEST**: Perform manual keyboard/screen reader testing
+4. **VERIFY**: Does the issue reproduce in actual user scenarios?
+5. **ONLY THEN**: Report the finding
+
+*Skipping any step = unverified, not a finding.*
+
+## Red Flags - STOP
+
+| Excuse | Reality |
+|--------|---------|
+| "The automated tool said it's fine" | Automated tools miss context-specific issues - always supplement with manual testing |
+| "It looks good to me" | Personal preference ≠ universal usability - test with actual users |
+| "Fixing it would take too long" | Inaccessible design excludes users - never an acceptable trade-off |
+| "Most users won't notice" | Excluding any user group violates accessibility principles |
+| "I'll fix it later" | Accessibility debt accumulates and becomes exponentially harder to fix |
+
 ## Guiding principle
 
 When choosing between valid approaches, always choose the one producing a better end-user experience, even if it requires more implementation effort.
