@@ -15,6 +15,7 @@ A collection of custom skills for Claude, built to fill gaps in the default tool
 | [pcb-engineer](/pcb-engineer.md) | Full PCB design lifecycle from consulting through manufacturing prep. KiCad 8+, educational by default. |
 | [3d-print-design](/3d-print-design.md) | 3D-printable parts and enclosures across FDM, resin, SLS, and metal processes. Pairs with pcb-engineer. |
 | [cosmos-compose](/cosmos-compose.md) | Cosmos Cloud container configs, reverse proxy routes, OpenID/SSO, and platform administration. |
+| [copywriting](/copywriting.md) | Multi-domain writing skill: journalism, technical writing, narrative non-fiction, conversion copywriting. AI trope blacklist. Ogilvy, Schwartz, Sugarman, Hopkins, Halbert, Wiebe. |
 
 ## Installation
 
