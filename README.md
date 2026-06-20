@@ -17,6 +17,7 @@ A collection of custom skills for Claude, built to fill gaps in the default tool
 | [cosmos-compose](/cosmos-compose.md) | Cosmos Cloud container configs, reverse proxy routes, OpenID/SSO, and platform administration. |
 | [copywriting](/copywriting.md) | Multi-domain writing skill: journalism, technical writing, narrative non-fiction, conversion copywriting. AI trope blacklist. Ogilvy, Schwartz, Sugarman, Hopkins, Halbert, Wiebe. |
 | [svg-illustrator](/svg-illustrator.md) | Hand-author stylised SVG illustrations (covers, figures, icons) that read clearly and survive print-PDF rendering. Silhouette library, atmospheric perspective, composition rules, WeasyPrint support matrix, a11y and sanitisation baseline. |
+| [fleet-qa-loop](/fleet-qa-loop.md) | Loop-til-clean QA pass for any target: mechanical linters (auto-fix) first, then the qa/audit subagent fleet, until lint is clean, tests pass, and every agent returns PASS. Generalised toolchain detection; append-as-you-go agent reports survive truncation. |
 
 ## Installation
 
