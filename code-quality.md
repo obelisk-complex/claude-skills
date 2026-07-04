@@ -60,6 +60,7 @@ Before claiming any issue exists:
 - **Verify before trusting assumptions**: Never guess - use concrete evidence
 - **Test what you change**: Run the test suite before reporting success
 - **Don't invent abstractions**: Three similar lines are better than premature helpers
+- **Prefer the native tool over a workaround**: Before writing a compensating chain (replace-then-split-then-replace), a magic sentinel string that stands in for a real token, or a manual implementation of parsing/tokenising/serialisation, check whether the stdlib or a mature library solves it natively. The trigger is mechanical: the moment you reach for a placeholder, a sentinel, or a second copy of the same logic, stop and ask "is there a tool designed for this?" A workaround is not the right approach unless it's the only approach, and you should know you're in the workaround bucket and say why. A second copy of the same logic is the signal to extract the helper first, not continue duplicating.
 - **Secure by default**: Never suggest insecure patterns for convenience
 - **Audit outputs, not just inputs**: Check compiler warnings, linter output, and test results - reality over intention
 
