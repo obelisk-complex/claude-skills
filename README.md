@@ -8,16 +8,34 @@ A collection of custom skills for Claude, built to fill gaps in the default tool
 
 | Skill | Description |
 |---|---|
-| [code-quality](/code-quality.md) | Language-agnostic code standards, review mode, and testing guidance. Refuses to write code it considers wrong. |
-| [frontend-design](/frontend-design.md) | UX-first frontend interfaces with WCAG 2.2 AA, Nielsen's heuristics, minimalist design, and an AI tropes blacklist. Replaces the built-in skill. |
-| [interview](/interview.md) | Structured requirements interview before building. Explores codebase, researches domain, asks targeted questions, runs gap analysis, writes spec file. |
-| [github-actions](/github-actions.md) | CI/CD workflows, reusable workflows, composite actions, and custom actions with security baked in. |
-| [pcb-engineer](/pcb-engineer.md) | Full PCB design lifecycle from consulting through manufacturing prep. KiCad 8+, educational by default. |
 | [3d-print-design](/3d-print-design.md) | 3D-printable parts and enclosures across FDM, resin, SLS, and metal processes. Pairs with pcb-engineer. |
-| [cosmos-compose](/cosmos-compose.md) | Cosmos Cloud container configs, reverse proxy routes, OpenID/SSO, and platform administration. |
+| [api-and-interface-design](/api-and-interface-design.md) | Guides stable API and interface design. Use when designing APIs, module boundaries, or any public interface. |
+| [browser-testing-with-devtools](/browser-testing-with-devtools.md) | Tests in real browsers via Chrome DevTools MCP. Inspect DOM, capture console errors, analyse network requests, profile performance, or verify visual output. |
+| [code-quality](/code-quality.md) | Language-agnostic code standards, review mode, and testing guidance. Refuses to write code it considers wrong. |
+| [context-engineering](/context-engineering.md) | Optimises agent context setup. Use when starting a new session, when agent output quality degrades, or when switching between tasks. |
 | [copywriting](/copywriting.md) | Multi-domain writing skill: journalism, technical writing, narrative non-fiction, conversion copywriting. AI trope blacklist. Ogilvy, Schwartz, Sugarman, Hopkins, Halbert, Wiebe. |
-| [svg-illustrator](/svg-illustrator.md) | Hand-author stylised SVG illustrations (covers, figures, icons) that read clearly and survive print-PDF rendering. Silhouette library, atmospheric perspective, composition rules, WeasyPrint support matrix, a11y and sanitisation baseline. |
+| [cosmos-compose](/cosmos-compose.md) | Cosmos Cloud container configs, reverse proxy routes, OpenID/SSO, and platform administration. |
+| [debugging-and-error-recovery](/debugging-and-error-recovery.md) | Systematic root-cause debugging. Use when tests fail, builds break, or behaviour doesn't match expectations. |
+| [deprecation-and-migration](/deprecation-and-migration.md) | Manages deprecation and migration. Use when removing old systems, APIs, or features, or deciding whether to maintain or sunset existing code. |
+| [documentation-and-adrs](/documentation-and-adrs.md) | Records decisions and documentation. Use when making architectural decisions, changing public APIs, or recording context for future engineers and agents. |
+| [doubt-driven-development](/doubt-driven-development.md) | Subjects every non-trivial decision to a fresh-context adversarial review before it stands. Use when correctness matters more than speed. |
 | [fleet-qa-loop](/fleet-qa-loop.md) | Loop-til-clean QA pass for any target: mechanical linters (auto-fix) first, then the qa/audit subagent fleet, until lint is clean, tests pass, and every agent returns PASS. Generalised toolchain detection; append-as-you-go agent reports survive truncation. |
+| [frontend-design](/frontend-design.md) | UX-first frontend interfaces with WCAG 2.2 AA, Nielsen's heuristics, minimalist design, and an AI tropes blacklist. Replaces the built-in skill. |
+| [git-workflow-and-versioning](/git-workflow-and-versioning.md) | Structures git workflow practices: commit discipline, branching, release management, and semantic versioning. |
+| [github-actions](/github-actions.md) | CI/CD workflows, reusable workflows, composite actions, and custom actions with security baked in. |
+| [idea-refine](/idea-refine.md) | Refines raw ideas into sharp, actionable concepts through structured divergent and convergent thinking. |
+| [incremental-implementation](/incremental-implementation.md) | Delivers changes incrementally in thin vertical slices. Implements one piece, tests it, verifies it, then expands. |
+| [interview](/interview.md) | Structured requirements interview before building. Explores codebase, researches domain, asks targeted questions, runs gap analysis, writes spec file. |
+| [observability-and-instrumentation](/observability-and-instrumentation.md) | Instruments code so production behaviour is visible and diagnosable through logging, metrics, tracing, and alerting. |
+| [pcb-engineer](/pcb-engineer.md) | Full PCB design lifecycle from consulting through manufacturing prep. KiCad 8+, educational by default. |
+| [performance-optimization](/performance-optimization.md) | Optimises application performance. Measures before optimising, identifies bottlenecks, fixes, and guards against regression. |
+| [planning-and-task-breakdown](/planning-and-task-breakdown.md) | Breaks work into ordered, verifiable tasks with explicit acceptance criteria and dependency graphs. |
+| [security-and-hardening](/security-and-hardening.md) | Security-first development practices: input validation, authentication, authorisation, secrets management, and threat modelling. |
+| [shipping-and-launch](/shipping-and-launch.md) | Prepares production launches with pre-launch checklists, feature flag strategy, staged rollout, monitoring, and rollback plans. |
+| [source-driven-development](/source-driven-development.md) | Grounds every implementation decision in official documentation. Cites sources for all framework-specific code. |
+| [spec-driven-development](/spec-driven-development.md) | Creates structured specifications before writing code. Four-phase gated workflow: specify, plan, task, implement. |
+| [svg-illustrator](/svg-illustrator.md) | Hand-author stylised SVG illustrations (covers, figures, icons) that read clearly and survive print-PDF rendering. Silhouette library, atmospheric perspective, composition rules, WeasyPrint support matrix, a11y and sanitisation baseline. |
+| [test-driven-development](/test-driven-development.md) | Drives development with tests. Write a failing test before making it pass. For bug fixes, reproduce with a test first. |
 
 ## Installation
 
