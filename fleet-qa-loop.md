@@ -15,6 +15,8 @@ Runs a loop-until-clean quality pass over any codebase or target. Cheap mechanic
 - **Loop til clean, but never spin.** Terminates on CLEAN (lint green, tests green, every agent PASS) or STALLED (a finding survives two rounds, an agent returns BLOCKED, or an iteration cap is hit).
 - **Append-as-you-go reporting.** Every dispatched agent writes its report skeleton first and appends each finding the moment it is found, so a truncated or dead agent still leaves its findings on disk - an incomplete report beats a complete report lost.
 - **Chesterton's fence on "unused" code.** Never blind-deletes a flagged-unused variable: an unused computed value is often a missing-use bug, not dead code.
+- **Every claim cites its failure path.** No agent is asked to *describe* a symptom; it states the symptom and cites the `file:line` that produces it. Severity is judged against what the caller does on error, not against the fix. Reviewers re-derive the symptom from the code rather than grading a description they were handed - briefing an agent on a known-false claim does not stop it reproducing that claim.
+- **The user's live session is not test hardware.** Runtime evidence comes from a sandbox (Xvfb, container, VM, scratch `HOME`). Launching a daemon against the user's display, or writing to their dotfiles, needs a yes first.
 
 ## Installation
 

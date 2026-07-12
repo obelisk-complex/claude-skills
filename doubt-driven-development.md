@@ -106,6 +106,21 @@ CONTRACT: <paste contract>
 
 **Pass ARTIFACT + CONTRACT only. Do NOT pass the CLAIM.** Handing the reviewer your conclusion biases it toward agreement. The reviewer must independently determine whether the artifact satisfies the contract.
 
+#### Withhold the claim even when you are trying to refute it
+
+The rule above is usually read as "don't let the reviewer agree with you." It is stronger than that: **naming a claim plants it, whether you name it as true or as false.**
+
+On a neowall fork, two fresh agents were briefed on a false claim *by name*: told in writing that "a failed shader load leaves a black wallpaper" was false, and that the real symptom was a silently stalled cycle. Both wrote the false version back into their own commit messages anyway. Fabrication is not an inheritance problem that a warning intercepts; it is regenerated from the same pressure every time, because the dramatic symptom is the better story. A list of known-bad claims does not immunise a reviewer against them.
+
+So when the claim under doubt is a **symptom or severity claim** ("this leaves the screen blank", "this corrupts the row", "this hangs the request"):
+
+- The ARTIFACT is the **failure path**: the error branch and, crucially, **what the caller does on error**. Not the fix.
+- Ask the reviewer to **derive** the symptom from that code, in its own words. Do not give it a symptom to grade. A description handed over is a description agreed with.
+- Require a `file:line` citation for whatever symptom it derives. **A severity claim with no code path behind it is a guess wearing a lab coat.** If the reviewer cannot cite the line that produces the symptom, that is the finding.
+- If your derived symptom and the reviewer's disagree, that disagreement is the most valuable output of the cycle. Re-read the failure path yourself before deciding which is right.
+
+This lowers the rate; it does not eliminate it. In the neowall audit, four of five independent re-derivations caught a false claim, which means one did not.
+
 In Claude Code, the role-based reviewers in `agents/` start with isolated context by design and are usable here — see `agents/` for the roster and per-domain match.
 
 **The adversarial prompt above takes precedence over the persona's default response shape.** Personas like `code-reviewer` are written to produce balanced verdicts with both strengths and weaknesses; doubt-driven needs issues-only output. Paste the adversarial prompt verbatim into the invocation so it overrides the persona's default. If a persona's response shape can't be overridden cleanly, fall back to a generic subagent with the adversarial prompt.
@@ -204,6 +219,8 @@ If 3 cycles is "obviously insufficient" because the artifact is large: the artif
 | "The reviewer disagreed so I was wrong" | The reviewer lacks your context — disagreement is information, not verdict. Re-read the artifact, classify, then decide. |
 | "Cross-model is always better" | Cross-model catches blind spots a single model shares with itself, but it adds cost and tool fragility. Offer it every interactive doubt cycle — the user decides whether the artifact warrants it. The agent's job is to surface the choice, not to gate it. |
 | "User said yes once, so I can keep invoking the CLI" | Each invocation is its own authorization. The artifact, the prompt, and the flags change between calls — re-confirm the exact command with the user before every run. |
+| "I warned the reviewer that this claim is false, so it won't repeat it" | It will. Two agents told a claim was false wrote it back into their own commits. Withhold the claim and make the reviewer derive the symptom from the failure path. |
+| "The symptom is obvious from the fix" | The fix tells you what changed, not what breaks without it. Severity lives in the failure path: read what the caller does on error. |
 
 ## Red Flags
 
@@ -220,6 +237,8 @@ If 3 cycles is "obviously insufficient" because the artifact is large: the artif
 - Falling back silently when an external CLI errors or is missing — surface the failure and let the user redirect
 - Stripping the contract from the reviewer's input
 - Passing the CLAIM to the reviewer (biases toward agreement)
+- Naming a suspected-false claim to the reviewer "so it knows to avoid it" (it plants the claim instead)
+- Asserting a symptom or severity with no `file:line` behind it, or reading severity off the fix instead of the failure path
 
 ## Interaction with Other Skills
 
@@ -235,7 +254,8 @@ After applying doubt-driven development:
 
 - [ ] Every non-trivial decision (per the definition above) was named explicitly as a CLAIM before standing
 - [ ] At least one fresh-context review per non-trivial artifact (a failing test produced by TDD's RED step satisfies this for behavioral claims, per Interaction with Other Skills)
-- [ ] The reviewer received ARTIFACT + CONTRACT — NOT the CLAIM, NOT your reasoning
+- [ ] The reviewer received ARTIFACT + CONTRACT — NOT the CLAIM, NOT your reasoning, and NOT any claim you suspect is false
+- [ ] For symptom or severity claims: the reviewer derived the symptom itself from the failure path, and every surviving claim cites `file:line`
 - [ ] The reviewer's prompt was adversarial ("find issues"), not validating ("is it good")
 - [ ] Findings were classified against the artifact text (not rubber-stamped) using the precedence: contract misread / actionable / trade-off / noise
 - [ ] A stop condition was met (trivial findings, 3 cycles, or user override)

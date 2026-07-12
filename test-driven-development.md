@@ -128,6 +128,20 @@ export async function completeTask(id: string): Promise<Task> {
 // Step 3: Test passes → bug fixed, regression guarded
 ```
 
+### "It fails against the old code" is a claim, not a given
+
+RED is not a box to tick, it is an **observation**. Run the test against the old code and read the output, because *how* it fails decides whether it pins anything:
+
+| What you see | What it means |
+|---|---|
+| Assertion failure on the buggy behaviour | The test pins the bug. This is RED. |
+| Compile / import / attribute error | The test does not run at all. It pins nothing yet. |
+| Passes | You have not reproduced the bug. Do not proceed to the fix. |
+
+The middle row is the one that gets written up as a success. A neowall bug-fix commit claimed its new tests "fail against the `isdigit` + `atoi` parse and pass with the helper". They did not fail against it: they called a helper that did not exist yet, so against the old code they did not compile. **A test that cannot compile against the old code is not a failing test, and a commit message saying otherwise is a false claim about your own diff.**
+
+If your test only reaches the old code path through an API you are adding in the same change, say what the test actually demonstrates: it pins the *new* behaviour going forward, and the old behaviour was verified some other way (say which). If you cannot verify the old behaviour, mark it `UNVERIFIED:` rather than asserting a RED you never saw.
+
 ## The Test Pyramid
 
 Invest testing effort according to the pyramid — most tests should be small and fast, with progressively fewer tests at higher levels:
@@ -358,6 +372,7 @@ For detailed testing patterns, examples, and anti-patterns across frameworks, se
 | "The code is self-explanatory" | Tests ARE the specification. They document what the code should do, not what it does. |
 | "It's just a prototype" | Prototypes become production code. Tests from day one prevent the "test debt" crisis. |
 | "Let me run the tests again just to be extra sure" | After a clean test run, repeating the same command adds nothing unless the code has changed since. Run again after subsequent edits, not as reassurance. |
+| "Obviously it would fail against the old code" | Then run it against the old code and read the output. A compile error is not a failing test, and "these tests fail without the fix" is a claim about your own diff that you can check in one command. |
 
 ## Red Flags
 
@@ -365,6 +380,7 @@ For detailed testing patterns, examples, and anti-patterns across frameworks, se
 - Tests that pass on the first run (they may not be testing what you think)
 - "All tests pass" but no tests were actually run
 - Bug fixes without reproduction tests
+- Claiming a test "fails without the fix" without having watched it fail, or counting a compile error against the old code as RED
 - Tests that test framework behavior instead of application behavior
 - Test names that don't describe the expected behavior
 - Skipping tests to make the suite pass
@@ -376,7 +392,7 @@ After completing any implementation:
 
 - [ ] Every new behavior has a corresponding test
 - [ ] All tests pass: `npm test`
-- [ ] Bug fixes include a reproduction test that failed before the fix
+- [ ] Bug fixes include a reproduction test that was **observed** failing before the fix, with an assertion failure rather than a compile error
 - [ ] Test names describe the behavior being verified
 - [ ] No tests were skipped or disabled
 - [ ] Coverage hasn't decreased (if tracked)

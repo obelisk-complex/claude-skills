@@ -80,6 +80,11 @@ Fetch the specific documentation page for the feature you're implementing. Not t
 - Blog posts or tutorials (even popular ones)
 - AI-generated documentation or summaries
 - Your own training data (that is the whole point — verify it)
+- **Code comments, `NOTE:`s and commit messages in your own repo.** These are claims at the same evidentiary level as a finding, not facts to reason from. An in-tree claim is covered by no test and contradicted by nothing in the repo, so it reads like established fact and the next reader builds on it. A neowall comment justified a hardcoded value with "KWin 6 closes a BACKGROUND surface that asks to ignore other exclusive zones", and a commit blamed the NVIDIA driver. The machine is an AMD card running X11/Cinnamon: no KDE, no Wayland, no NVIDIA. The behaviour could not have been observed, and the comment was covering a regression the protocol header in `protocols/` contradicted outright.
+
+**If a claim cites a platform, establish that someone had that platform.** `lspci`, `$XDG_CURRENT_DESKTOP`, `$XDG_SESSION_TYPE` and `uname` settle it in seconds, and an unobservable claim is a fabricated one. Claims citing a spec, man page or protocol header are **not** suspect: verify against the source and move on. This is a check on platform-behaviour assertions, not a hunt through every comment in the tree.
+
+Never write a comment asserting external behaviour you have not observed. If you cannot verify it, mark it `UNVERIFIED:` rather than dressing a guess as a measurement.
 
 **Be precise with what you fetch:**
 
@@ -177,6 +182,8 @@ Honesty about what you couldn't verify is more valuable than false confidence.
 - Implementing a pattern without knowing which version it applies to
 - Citing Stack Overflow or blog posts instead of official documentation
 - Using deprecated APIs because they appear in training data
+- Reasoning from an in-tree comment or commit message as though it were a verified fact
+- Asserting behaviour of a platform (GPU, compositor, kernel, browser) that nobody working on this code has ever run
 - Not reading `package.json` / dependency files before implementing
 - Delivering code without source citations for framework-specific decisions
 - Fetching an entire docs site when only one page is relevant
@@ -193,6 +200,8 @@ After implementing with source-driven development:
 - [ ] No deprecated APIs are used (checked against migration guides)
 - [ ] Conflicts between docs and existing code were surfaced to the user
 - [ ] Anything that could not be verified is explicitly flagged as unverified
+- [ ] No decision rests on an in-tree comment or commit message that was itself never verified
+- [ ] Any comment asserting external platform behaviour is either sourced to a spec/doc or marked `UNVERIFIED:`
 
 ## Licence
 
