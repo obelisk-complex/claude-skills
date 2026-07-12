@@ -121,6 +121,21 @@ So when the claim under doubt is a **symptom or severity claim** ("this leaves t
 
 This lowers the rate; it does not eliminate it. In the neowall audit, four of five independent re-derivations caught a false claim, which means one did not.
 
+#### When the claim names a commit, the ARTIFACT is that commit's blob
+
+A reviewer reviews what you hand it. Hand it the wrong tree and it will review the wrong tree with full confidence, and that confidence will read back to you as verification.
+
+The same neowall fork carried a commit message saying `wl->initialized` is set at `wayland_core.c:536` of upstream commit `5aa206f`. **That was true.** A review agent "corrected" it to `:544`, which is where the line sits *after our own patch is applied*. It had measured the working tree it had checked out, not the commit the sentence named. The correction was propagated into the commit message and then into a draft issue addressed to an upstream maintainer we had never spoken to. **Three** review cycles passed it. It died only when one agent ran `git show 5aa206f:<path>` and read the blob instead of the prose.
+
+Notice what that defeats. The rule immediately above says a symptom claim must cite the `file:line` that proves it. Here the citation existed, it was specific, and it was false. **Specificity is not verification.** A precise wrong number is harder to doubt than a vague right one, because precision is what doubt usually looks for.
+
+So when the claim under doubt cites a commit, tag or release:
+
+- **The ARTIFACT is the blob at that ref**, fetched with `git show <ref>:<path> | sed -n '<line>p'`. Not the file on disk. The working copy is a different artifact that happens to share a filename, and the patch under review is precisely what makes them differ.
+- **Never settle a citation by opening the working copy.** It is the natural move and it is silently wrong whenever the sentence names a tree other than the one you have checked out.
+- **Outward-facing artifacts get every citation checked at the blob before they ship**: an upstream issue, a PR, a comment on a repo that is not yours. There the reader cannot see your working tree, and a wrong line number against a named hash is checkable by them and not by you.
+- **Cite only refs the reader can resolve.** Fork-local scaffolding commits produce hashes that dangle for everyone outside the fork; squash before submitting.
+
 In Claude Code, the role-based reviewers in `agents/` start with isolated context by design and are usable here — see `agents/` for the roster and per-domain match.
 
 **The adversarial prompt above takes precedence over the persona's default response shape.** Personas like `code-reviewer` are written to produce balanced verdicts with both strengths and weaknesses; doubt-driven needs issues-only output. Paste the adversarial prompt verbatim into the invocation so it overrides the persona's default. If a persona's response shape can't be overridden cleanly, fall back to a generic subagent with the adversarial prompt.
