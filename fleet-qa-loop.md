@@ -14,6 +14,7 @@ Runs a loop-until-clean quality pass over any codebase or target. Cheap mechanic
 - **Generalised to any target.** Detects the toolchain from the files present, verifies each tool exists before invoking it, and skips-with-a-note when one is absent.
 - **Loop til clean, but never spin.** Terminates on CLEAN (lint green, tests green, every agent PASS) or STALLED (a finding survives two rounds, an agent returns BLOCKED, or an iteration cap is hit).
 - **Append-as-you-go reporting.** Every dispatched agent writes its report skeleton first and appends each finding the moment it is found, so a truncated or dead agent still leaves its findings on disk - an incomplete report beats a complete report lost.
+- **Adversarial verification before any fix.** A finding graded only by the agent that produced it is a self-assessment. Each finding faces three independent refuters - briefed to *kill* it, given the code but not the author's reasoning, and told to default to "refuted" when uncertain. Only findings that survive get fixed; refuted ones are recorded rather than silently dropped, so the fleet's false-positive rate stays visible.
 - **Chesterton's fence on "unused" code.** Never blind-deletes a flagged-unused variable: an unused computed value is often a missing-use bug, not dead code.
 
 ## Installation
