@@ -6,7 +6,11 @@ A Claude skill for generating production-grade GitHub Actions workflows, reusabl
 
 ## What it does
 
+Domain: CI/CD pipeline engineering on GitHub Actions. Reader: developers and platform engineers authoring or maintaining workflow automation.
+
 Generates CI/CD pipeline YAML with security and maintainability baked in from the start. Covers the full GitHub Actions surface: workflow files, reusable workflows, composite actions, custom JS and Docker actions, self-hosted runner configuration, and debugging failing workflows.
+
+If the current SHA for a pinned action cannot be verified at generation time, note which actions need SHA confirmation before production use. If a workflow pattern is ambiguous across runner environments, state the assumption and flag it for testing.
 
 ## Opinionated defaults
 
@@ -67,3 +71,4 @@ Before claiming any GitHub Actions workflow is correct:
 - **Version pinning**: Always pin action versions to prevent supply chain attacks
 - **Environment promotion**: Use environments with protection rules for promotions
 - **Monitoring integration**: Integrate with monitoring and alerting systems
+- **Honest uncertainty**: If a workflow step cannot be locally validated, say which steps require live-runner verification rather than asserting correctness

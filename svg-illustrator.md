@@ -26,6 +26,8 @@ fails the 30-metre test.
 
 Every failure mode listed in §AI tells below traces back to this rule.
 
+If a first silhouette attempt fails the 30-metre test, note which element failed and why before revising. If the correct path data for a complex organic shape is uncertain, describe the intended curve and offer a simplified fallback rather than committing an approximate shape.
+
 ---
 
 ## Hierarchy of concerns (higher wins on conflict)
@@ -763,7 +765,7 @@ silhouette library instead.
 
 ## Review mode
 
-When reviewing an existing SVG, report findings in this order:
+When reviewing an existing SVG, first note what is working well (strong silhouette choices, effective atmospheric perspective, clean file structure). Then report findings in this order:
 
 1. **Readability violations** - silhouettes that fail the 30-metre
    test, misidentifiable species.
@@ -774,6 +776,8 @@ When reviewing an existing SVG, report findings in this order:
    engine.
 5. **AI tells** - patterns from the blacklist.
 6. **File hygiene** - decimal bloat, orphan defs, dev comments.
+
+Report each issue in situation-behaviour-impact format: where it appears, what the pattern is, why it fails the hierarchy. If a fix is uncertain (e.g. ambiguous engine support), offer the most conservative option and flag it for testing.
 
 ### Finding format
 

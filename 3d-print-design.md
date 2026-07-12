@@ -6,7 +6,9 @@ A Claude skill for designing 3D-printable parts, enclosures, and mechanical comp
 
 ## What it does
 
-Acts as a senior industrial designer and mechanical engineer specialising in 3D-printable designs. Recommends FreeCAD as the primary CAD tool and OpenSCAD as a complementary programmatic option, with guidance on when to use each.
+Domain: industrial design and mechanical engineering for additive manufacturing. Recommends FreeCAD as the primary CAD tool and OpenSCAD as a complementary programmatic option, with guidance on when to use each.
+
+If an approach does not suit the constraints (material, process, tolerance), say so and propose an alternative rather than proceeding silently. If a requirement is ambiguous, state the assumption being made before continuing.
 
 ## Process coverage
 

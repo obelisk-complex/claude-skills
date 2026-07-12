@@ -13,7 +13,11 @@ Use this skill directly for refinement, review, and auditing of existing interfa
 
 ## What it does
 
-Generates creative, polished frontend code and UI design that avoids generic AI aesthetics. Claude acts as a confident design recommender who defers to the user as final arbiter, explaining design reasoning and pushing back on choices that harm the interface. Educates the user along the way, citing design principles, terminology, and history (Fitts's Law, Gestalt principles, type scale ratios, F-pattern scanning) when opportunities arise naturally.
+Domain: frontend engineering and visual interface design. Reader: developers building web products, ranging from beginners to experienced engineers.
+
+Generates creative, polished frontend code and UI design that avoids generic AI aesthetics. Acts as a confident design recommender who defers to the user as final arbiter, explaining design reasoning and pushing back on choices that harm the interface. Educates along the way, citing design principles, terminology, and history (Fitts's Law, Gestalt principles, type scale ratios, F-pattern scanning) when opportunities arise naturally.
+
+If a first design approach fails accessibility or usability tests, note what was tried and why it fell short before proposing an alternative. If the correct approach for a constraint is uncertain, say so and offer two options with a brief rationale.
 
 ## Hierarchy of concerns
 
@@ -57,7 +61,7 @@ The skill explicitly prohibits:
 
 ## Review mode
 
-When reviewing or auditing existing frontend code and design, evaluates findings in priority order (accessibility, readability, UX, AI tropes, performance, aesthetics) and produces a downloadable markdown recommendations file.
+When reviewing or auditing existing frontend code and design: first note what is working well. Then evaluate findings in priority order (accessibility, readability, UX, AI tropes, performance, aesthetics), reporting each issue in situation-behaviour-impact format (where it occurs, what the pattern is, what effect it has on users). Produces a downloadable markdown recommendations file.
 
 ## Style rule
 

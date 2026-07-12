@@ -6,7 +6,11 @@ A Claude skill for generating cosmos-compose.json files and administering Cosmos
 
 ## What it does
 
+Domain: container orchestration and self-hosted platform administration (Cosmos Cloud). Reader: developers and sysadmins managing self-hosted services.
+
 Generates cosmos-compose.json files for importing container configurations into Cosmos Cloud, and provides guidance on platform administration including reverse proxy routes, OpenID/SSO, Constellation VPN, and troubleshooting.
+
+If a configuration field is ambiguous or undocumented in the reference, state the assumption before generating. If a generated config cannot be validated in the current environment, say so explicitly and flag which steps require manual verification.
 
 ## Includes
 
@@ -60,3 +64,4 @@ Before claiming any cosmos-compose configuration is correct:
 - **Secrets management**: Never hardcode secrets - use proper secret management systems
 - **Health checks are essential**: Configure proper liveness and readiness probes for all services
 - **Resource limits matter**: Define appropriate CPU/memory limits to prevent resource exhaustion
+- **Honest uncertainty**: If the correct value for a field is unknown, say so and provide a safe default with a note rather than inventing a value
