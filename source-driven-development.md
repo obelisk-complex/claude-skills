@@ -80,6 +80,11 @@ Fetch the specific documentation page for the feature you're implementing. Not t
 - Blog posts or tutorials (even popular ones)
 - AI-generated documentation or summaries
 - Your own training data (that is the whole point — verify it)
+- **Code comments, `NOTE:`s and commit messages in your own repo.** These are claims at the same evidentiary level as a finding, not facts to reason from. An in-tree claim is covered by no test and contradicted by nothing in the repo, so it reads like established fact and the next reader builds on it. A neowall comment justified a hardcoded value with "KWin 6 closes a BACKGROUND surface that asks to ignore other exclusive zones", and a commit blamed the NVIDIA driver. The machine is an AMD card running X11/Cinnamon: no KDE, no Wayland, no NVIDIA. The behaviour could not have been observed, and the comment was covering a regression the protocol header in `protocols/` contradicted outright.
+
+**If a claim cites a platform, establish that someone had that platform.** `lspci`, `$XDG_CURRENT_DESKTOP`, `$XDG_SESSION_TYPE` and `uname` settle it in seconds, and an unobservable claim is a fabricated one. Claims citing a spec, man page or protocol header are **not** suspect: verify against the source and move on. This is a check on platform-behaviour assertions, not a hunt through every comment in the tree.
+
+Never write a comment asserting external behaviour you have not observed. If you cannot verify it, mark it `UNVERIFIED:` rather than dressing a guess as a measurement.
 
 **Be precise with what you fetch:**
 
@@ -160,6 +165,22 @@ Verify before using in production.
 
 Honesty about what you couldn't verify is more valuable than false confidence.
 
+**Citing code rather than docs:**
+
+The same version discipline applies when the source is a source file, and it is easier to get wrong there. A URL with no version on it looks obviously weak. A `file:line` with no commit on it looks complete.
+
+**A `file:line` is true only relative to a named tree.** Verify it against that tree, not in your editor:
+
+```bash
+git show 5aa206f:src/wayland_core.c | sed -n '536p'
+```
+
+A neowall commit message said `wl->initialized` is set at `wayland_core.c:536` of upstream commit `5aa206f`. It was right. A reviewer "corrected" it to `:544`, which is where the line sits once our own patch is applied: it had read the working tree rather than the commit the sentence cited. The false version went into the commit message and then into a draft issue for an upstream maintainer, and it survived three reviews. It was caught when someone finally read the blob.
+
+- **Pin the ref the way you pin the version.** "`wayland_core.c:536` of `5aa206f`" is a citation. "`wayland_core.c:536`" is a citation to whatever you happen to have checked out, and it expires the next time anyone edits the file.
+- **Opening the working copy does not verify a citation that names another commit.** It is the natural move and it silently measures the wrong tree, because line numbers move under the very patch the sentence is describing.
+- **Every citation in an outward-facing artefact gets a blob-level check before it ships**, and cite only refs the reader can resolve. A fork-local scaffolding hash dangles for everyone but you.
+
 ## Common Rationalizations
 
 | Rationalization | Reality |
@@ -177,6 +198,10 @@ Honesty about what you couldn't verify is more valuable than false confidence.
 - Implementing a pattern without knowing which version it applies to
 - Citing Stack Overflow or blog posts instead of official documentation
 - Using deprecated APIs because they appear in training data
+- Reasoning from an in-tree comment or commit message as though it were a verified fact
+- Settling a `file:line` citation by opening the working copy when the sentence names a different commit
+- Citing a `file:line` with no ref behind it, or a ref the reader cannot resolve
+- Asserting behaviour of a platform (GPU, compositor, kernel, browser) that nobody working on this code has ever run
 - Not reading `package.json` / dependency files before implementing
 - Delivering code without source citations for framework-specific decisions
 - Fetching an entire docs site when only one page is relevant
@@ -192,7 +217,10 @@ After implementing with source-driven development:
 - [ ] Non-trivial decisions include source citations with full URLs
 - [ ] No deprecated APIs are used (checked against migration guides)
 - [ ] Conflicts between docs and existing code were surfaced to the user
+- [ ] Every `file:line` citation names a ref, and was checked against that ref's blob (`git show <ref>:<path>`) rather than the working copy
 - [ ] Anything that could not be verified is explicitly flagged as unverified
+- [ ] No decision rests on an in-tree comment or commit message that was itself never verified
+- [ ] Any comment asserting external platform behaviour is either sourced to a spec/doc or marked `UNVERIFIED:`
 
 ## Licence
 

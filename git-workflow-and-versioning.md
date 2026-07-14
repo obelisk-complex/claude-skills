@@ -94,6 +94,17 @@ update auth.ts
 - `docs` — Documentation only
 - `chore` — Tooling, dependencies, config
 
+**A citation in a commit message names a tree, or it rots.**
+
+Messages routinely quote code locations: "the flag is set at `wayland_core.c:536` of upstream `5aa206f`". That sentence is true only against the tree it names, and the tree it names is not the one you have checked out. Your tree already carries the patch this very commit introduces, and that patch is what moves the line.
+
+On a neowall fork the `:536` citation was correct. A review agent "corrected" it to `:544`, which is where the line lands *after* the patch was applied, and the correction was propagated into the commit message and then into a draft issue addressed to an upstream maintainer. Three reviews passed the false version. It was caught only when an agent ran `git show 5aa206f:src/wayland_core.c | sed -n '536p'` instead of opening the file.
+
+- **Verify a cited `file:line` at the blob:** `git show <ref>:<path> | sed -n '<line>p'`. Never by opening the working copy, which is the natural move and silently measures the wrong tree.
+- **Specificity is not verification.** A precise wrong line number survives review better than a vague right one.
+- **Anything going outward gets every citation blob-checked before it ships**: an upstream issue, a PR against a repo that is not yours, a bug report.
+- **Cite only refs the recipient can resolve.** A branch carrying fork-local scaffolding commits quotes hashes that dangle for everyone outside your fork. Squash before submitting.
+
 ### 4. Keep Concerns Separate
 
 Don't combine formatting changes with behavior changes. Don't combine refactors with features. Each type of change should be a separate commit — and ideally a separate PR:
@@ -337,6 +348,8 @@ Write the entry in the same change that makes the change, while the impact is fr
 - A breaking change shipped under a minor or patch version bump
 - A release with no tag, or a version number hand-edited out of sync with the tag
 - A user-facing release with no changelog entry, or a changelog that's just dumped commit messages
+- A `file:line` in a message checked against the working copy rather than the ref it names
+- An outward-facing issue or PR citing a hash the recipient cannot resolve
 
 ## Verification
 
@@ -347,6 +360,7 @@ For every commit:
 - [ ] Tests pass before committing
 - [ ] No secrets in the diff
 - [ ] No formatting-only changes mixed with behavior changes
+- [ ] Every `file:line` in the message was checked with `git show <ref>:<path>` against the ref it names
 - [ ] `.gitignore` covers standard exclusions
 
 For every release (anything with consumers):
