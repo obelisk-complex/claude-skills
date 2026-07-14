@@ -196,6 +196,16 @@ Acknowledge the skip in the output (*"Proceeding with single-model findings only
 
 Cross-model adds cost, latency, and tool fragility. The agent surfaces the choice every cycle; the user decides whether this artifact warrants it.
 
+#### Root-cause claims: refute before you relay
+
+A causal claim ("X causes Y") gets the same DOUBT treatment as a code claim, with one addition: design the experiment that would disprove it, and run that one first, not the one that would confirm it. Five coherent root-cause stories were stated and believed in a single debugging session; all five were wrong, and each was killed by an experiment that could have gone either way - cutting the network refuted "the network is the problem" in one run.
+
+**A hypothesis that only restates the symptom is not a hypothesis.** "It times out" and "it's environment-dependent" rename the observation instead of explaining it. Ask: what would I see if this were not true? If the answer is "the same thing", it's a paraphrase, not a cause.
+
+**Silence from a diagnostic you just added is evidence, not a null result.** A fix had added error reporting on a timeout path. When the failure recurred and that reporting stayed silent, the silence proved the failure mode had changed: the code was completing, not erroring, on a path the new instrument didn't cover.
+
+**Relaying a subagent's hypothesis in your own voice is authoring a claim, not reporting one.** Say "agent X found Y, on evidence Z", never bare "Y". Five subagent hypotheses were repeated by their orchestrator as findings, and all five were later refuted; the paraphrase, not the guess, is what reached the user's notes as fact.
+
 ### Step 4: RECONCILE — Fold findings back
 
 The reviewer's output is data, not verdict. **You are still the orchestrator.** Re-read the artifact text against each finding before classifying — rubber-stamping the reviewer is the same failure mode as ignoring it.
@@ -236,6 +246,7 @@ If 3 cycles is "obviously insufficient" because the artifact is large: the artif
 | "User said yes once, so I can keep invoking the CLI" | Each invocation is its own authorization. The artifact, the prompt, and the flags change between calls — re-confirm the exact command with the user before every run. |
 | "I warned the reviewer that this claim is false, so it won't repeat it" | It will. Two agents told a claim was false wrote it back into their own commits. Withhold the claim and make the reviewer derive the symptom from the failure path. |
 | "The symptom is obvious from the fix" | The fix tells you what changed, not what breaks without it. Severity lives in the failure path: read what the caller does on error. |
+| "The network/environment is obviously the problem" | A causal story that only renames the symptom isn't a hypothesis. Design the experiment that would refute it and run that first - cutting the network took one run to refute a belief already written into the project's notes. |
 
 ## Red Flags
 
@@ -254,6 +265,8 @@ If 3 cycles is "obviously insufficient" because the artifact is large: the artif
 - Passing the CLAIM to the reviewer (biases toward agreement)
 - Naming a suspected-false claim to the reviewer "so it knows to avoid it" (it plants the claim instead)
 - Asserting a symptom or severity with no `file:line` behind it, or reading severity off the fix instead of the failure path
+- Designing an experiment that would confirm a causal hypothesis instead of one that would refute it
+- Repeating a subagent's causal hypothesis as your own finding, without naming the claimant or its evidence
 
 ## Interaction with Other Skills
 
@@ -277,6 +290,8 @@ After applying doubt-driven development:
 - [ ] In interactive mode, cross-model was **explicitly offered** to the user (regardless of artifact stakes) and the response was acknowledged in the output
 - [ ] In non-interactive mode, cross-model was skipped and the skip was announced
 - [ ] Any external CLI invocation was preceded by a PATH check, a working-binary test, syntax confirmation with the user, and explicit authorization to run
+- [ ] For causal ("X causes Y") claims: the disproving experiment was designed and run before the confirming one
+- [ ] Any subagent hypothesis relayed onward carries its claimant and evidence, never repeated as a bare finding
 
 ## Licence
 

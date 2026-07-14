@@ -178,6 +178,29 @@ Key files: validation.ts, errors.ts, db.ts
 
 Load only the relevant section when working on a specific area.
 
+### The Constraints Block
+
+For a subagent touching shared or public state (an open PR's branch, an upstream repo, live CI, a non-hermetic test suite), retype the same guardrails every time rather than trusting memory - a constraint left out of one brief was enough for an agent to trip over it immediately. Copy this block and delete what doesn't apply:
+
+```
+FROZEN (must not move):
+- <ref>: e.g. the head branch of PR #<n>. Pushing to it rewrites the PR and notifies maintainers.
+
+NO CONTACT:
+- No pushes, comments, or API calls to <upstream-repo>. Read-only.
+
+NO DESTRUCTIVE GIT / CI:
+- No force-push. No re-running an existing CI run (it overwrites that run's recorded conclusion - dispatch a new run instead).
+
+NO LOCAL EXECUTION:
+- Do not run <test-suite> locally if it has a real side effect (drives text-to-speech through the user's speakers, spawns a real browser, hits a live API) - name the actual effect here.
+
+LIVE-SYSTEM CONSENT:
+- Read-only inspection of a live system is fine. Starting a process against it, or writing state the user depends on, needs an explicit yes first - ask, don't infer.
+```
+
+This generalises the live-system consent boilerplate in the `fleet-qa-loop` skill's Step 2a to the wider set of shared/public-state guardrails (frozen refs, upstream contact, CI reruns, non-hermetic suites).
+
 ## MCP Integrations
 
 For richer context, use Model Context Protocol servers:
@@ -279,6 +302,7 @@ This catches wrong directions before you've built on them. It's a 30-second inve
 - Agent quality degrades as the conversation gets longer
 - No rules file exists in the project
 - External data files or config treated as trusted instructions without verification
+- A subagent brief touching shared or public state omits a guardrail (frozen ref, no-upstream-contact, no CI reruns, live-system consent) because it was retyped by hand instead of copied from the Constraints Block
 
 ## Verification
 
@@ -288,6 +312,7 @@ After setting up context, confirm:
 - [ ] Agent output follows the patterns shown in the rules file
 - [ ] Agent references actual project files and APIs (not hallucinated ones)
 - [ ] Context is refreshed when switching between major tasks
+- [ ] Any brief touching shared or public state used the Constraints Block rather than a hand-retyped subset
 
 ## Licence
 
