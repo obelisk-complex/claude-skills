@@ -37,6 +37,7 @@ A collection of custom skills for Claude, built to fill gaps in the default tool
 | [spec-driven-development](/spec-driven-development.md) | Creates structured specifications before writing code. Four-phase gated workflow: specify, plan, task, implement. |
 | [svg-illustrator](/svg-illustrator.md) | Hand-author stylised SVG illustrations (covers, figures, icons) that read clearly and survive print-PDF rendering. Silhouette library, atmospheric perspective, composition rules, WeasyPrint support matrix, a11y and sanitisation baseline. |
 | [test-driven-development](/test-driven-development.md) | Drives development with tests. Write a failing test before making it pass. For bug fixes, reproduce with a test first. |
+| [upstream-prs-to-hermes-agent](/upstream-prs-to-hermes-agent.md) | Sends a change from a fork up to NousResearch/hermes-agent. Their CONTRIBUTING rules (and the one that is wrong), the contributor-check gate, the non-hermetic suite, and why the human opens the PR. |
 
 ## References
 
