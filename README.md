@@ -19,6 +19,7 @@ A collection of custom skills for Claude, built to fill gaps in the default tool
 | [deprecation-and-migration](/deprecation-and-migration.md) | Manages deprecation and migration. Use when removing old systems, APIs, or features, or deciding whether to maintain or sunset existing code. |
 | [documentation-and-adrs](/documentation-and-adrs.md) | Records decisions and documentation. Use when making architectural decisions, changing public APIs, or recording context for future engineers and agents. |
 | [doubt-driven-development](/doubt-driven-development.md) | Subjects every non-trivial decision to a fresh-context adversarial review before it stands. Use when correctness matters more than speed. |
+| [flaky-tests](/flaky-tests.md) | Diagnoses flaky and intermittently-failing tests: timeouts that budget the wrong thing, skip()-on-timeout, process-global mock pollution, live-service leakage, under-specified assertions. Mutation-check every fix; a streak of green runs is weak evidence. |
 | [fleet-qa-loop](/fleet-qa-loop.md) | Loop-til-clean QA pass for any target: mechanical linters (auto-fix) first, then the qa/audit subagent fleet, until lint is clean, tests pass, and every agent returns PASS. Generalised toolchain detection; append-as-you-go agent reports survive truncation. Every claim cites the failure path that produces it; runtime evidence comes from a sandbox, not the user's live session. |
 | [frontend-design](/frontend-design.md) | UX-first frontend interfaces with WCAG 2.2 AA, Nielsen's heuristics, minimalist design, and an AI tropes blacklist. Replaces the built-in skill. |
 | [git-workflow-and-versioning](/git-workflow-and-versioning.md) | Structures git workflow practices: commit discipline, branching, release management, and semantic versioning. |
@@ -36,6 +37,7 @@ A collection of custom skills for Claude, built to fill gaps in the default tool
 | [spec-driven-development](/spec-driven-development.md) | Creates structured specifications before writing code. Four-phase gated workflow: specify, plan, task, implement. |
 | [svg-illustrator](/svg-illustrator.md) | Hand-author stylised SVG illustrations (covers, figures, icons) that read clearly and survive print-PDF rendering. Silhouette library, atmospheric perspective, composition rules, WeasyPrint support matrix, a11y and sanitisation baseline. |
 | [test-driven-development](/test-driven-development.md) | Drives development with tests. Write a failing test before making it pass. For bug fixes, reproduce with a test first. |
+| [upstream-prs-to-hermes-agent](/upstream-prs-to-hermes-agent.md) | Sends a change from a fork up to NousResearch/hermes-agent. Their CONTRIBUTING rules (and the one that is wrong), the contributor-check gate, the non-hermetic suite, and why the human opens the PR. |
 
 ## References
 
