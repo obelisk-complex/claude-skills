@@ -12,7 +12,7 @@ Co-write and structure songs that feel human and unmistakably his. Every session
 - Turning a rough lyric or idea into a full, sectioned song.
 - Structuring lyrics for a text-to-music generator (Suno-style).
 - Polishing lines: rhyme, syllable flow, imagery.
-- Writing in his voice for his catalogue. Load `his-signature.md` first.
+- Writing in his voice for his catalogue. Load `his-signature.md` first if it is present (see References).
 
 Not for: music-theory questions (use `song-craft-reference.md`) or non-song prose.
 
@@ -25,7 +25,7 @@ Not for: music-theory questions (use `song-craft-reference.md`) or non-song pros
 ## Process
 1. Gather the real material: the specific memory, the private in-jokes, the actual detail. Object-write it first (senses only, no feeling-words) before drafting a line.
 2. Pick form and style traits. Match structure to genre (build-and-drop; verse / pre-chorus / chorus / bridge). Draft words and arrangement together; he thinks in both.
-3. Draft with his signature (`his-signature.md`) and the craft floor (`song-craft-reference.md`).
+3. Draft against the craft floor (`song-craft-reference.md`), plus `his-signature.md` if it is present. Without it, ask the writer for their own voice traits rather than inventing them; everything else in this skill works unchanged.
 4. Tighten: cut syllables until the lines move; prefer slant and internal rhyme; one concrete, un-generic image per section; plant early, pay off late.
 5. Review pass: get an independent read from more than one model (for example a Fable pass and a Sonnet pass). Creative judgement varies by model, so compare rather than average. Check against the AI-tell list.
 6. Iterate in the open: show adopted-versus-rejected options; give the real note, not praise; expect him to out-write a suggestion and build on it.
@@ -47,7 +47,7 @@ Not for: music-theory questions (use `song-craft-reference.md`) or non-song pros
 - Generic imagery: object-write the real memory; use one camera-testable detail.
 
 ## References
-- `his-signature.md`: his voice. Load before drafting in his style.
+- `his-signature.md`: a personal voice reference, **not distributed with this skill**. It is a private profile of one writer's style, so it is kept local and is absent from the published package. If it is not in this directory, skip it: the rest of the skill stands on its own, and any writer can supply their own equivalent as a file of the same name.
 - `song-craft-reference.md`: song form, prosody, rhyme, harmony, build-and-drop conventions, AI tells.
 - `suno-format.md`: the native Suno input template (styles block, section tags, terse inline cues).
 - `blocked-words.md`: plain music words the generator misreads as artist names.

@@ -21,7 +21,7 @@ Not for music-theory questions on their own, which route to the craft reference 
 
 ## Supporting files
 
-- **his-signature.md**: a voice and craft-signature reference distilled from the operator's own back catalogue, loaded before drafting in his style.
+- **his-signature.md**: a voice and craft-signature reference distilled from the operator's own back catalogue, loaded before drafting in his style. Personal, and so **not included in the published skill**; it is kept local to the operator's own install. The skill runs without it, and any writer can drop in their own file of the same name.
 - **song-craft-reference.md**: song form, prosody and singability, rhyme craft beyond perfect end-rhyme, melody and harmony for a lyricist, build-and-drop arrangement conventions, and a checklist of AI-lyric tells to cut on sight.
 - **suno-format.md**: the native Suno input template, the split between the bracket-free style field and the tagged lyrics field, the recognised bracket-tag glossary, and the working-doc shape to draft in.
 - **blocked-words.md**: a running list of ordinary music words the generator misreads as an artist or band name, each with a descriptive alternative.

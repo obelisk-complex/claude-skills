@@ -1,6 +1,6 @@
 # Song-craft reference
 
-Practical craft for writing and structuring songs. Companion to `SKILL.md` and `his-signature.md`. Fuller sourcing and worked rewrites live in llm-wiki `sources/songwriting-craft-and-ai-lyric-tells.md`.
+Practical craft for writing and structuring songs. Companion to `SKILL.md`, and to `his-signature.md` where that local-only voice reference is present. Fuller sourcing and worked rewrites live in llm-wiki `sources/songwriting-craft-and-ai-lyric-tells.md`.
 
 ## 1. Song form: what each section does
 - **Intro:** establish tempo, key/mode, and sonic palette before any narrative lands.
