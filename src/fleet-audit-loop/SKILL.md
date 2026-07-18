@@ -38,14 +38,20 @@ dimension-to-agent mapping in Step 2.
 
 ## Consumer and reach
 
-**The consumer of this skill is the orchestrator, and only the orchestrator.**
+**No dispatched auditor can invoke this skill.** All 55 agents in
+`/media/owner/Workspace/claude-agents/agents/` declare an explicit `tools:` list and
+not one includes `Skill` (verified 18 July 2026; re-check with
+`grep -h '^tools:' /media/owner/Workspace/claude-agents/agents/*.md`). **Every rule
+below that an auditor must follow reaches it only because the orchestrator copies it
+into that agent's dispatch brief.** Sections marked **[relay]** are text to be
+written into a brief; everything else is yours to execute.
 
-All 55 agents in `/media/owner/Workspace/claude-agents/agents/` declare an explicit
-`tools:` list and not one includes `Skill` (verify: `grep -h '^tools:' /media/owner/Workspace/claude-agents/agents/*.md`).
-A dispatched auditor therefore cannot read this file. **Every rule below that an
-auditor must follow reaches it only because the orchestrator copies it into that
-agent's dispatch brief.** Sections marked **[relay]** are text to be written into a
-brief; everything else is yours to execute.
+As of 18 July 2026 the orchestrator is also this skill's only reader, because no
+agent carries a `skills:` preload (verify:
+`grep -l '^skills:' /media/owner/Workspace/claude-agents/agents/*.md`, which matches
+nothing). A preload would add a reader without adding an invoker, so the relay
+requirement stands either way. `SKILL_CHECKLIST.md` covers the two delivery
+mechanisms in full.
 
 A loop skill written as though its auditors will read its rules is silently inert:
 the orchestrator behaves correctly and the fleet does not.

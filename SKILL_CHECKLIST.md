@@ -77,9 +77,9 @@ audit; report it once for the set rather than once per skill.
 
 Skills are invoked through the `Skill` tool. All 55 agents in
 `/media/owner/Workspace/claude-agents/agents/` declare an explicit `tools:` list
-and **not one of them includes `Skill`** (verify with
+and **not one of them includes `Skill`** (verified 18 July 2026; re-check with
 `grep '^tools:' /media/owner/Workspace/claude-agents/agents/*.md`). Only a caller
-holding `Skill` (an orchestrator, or an agent with `tools: *`) can load a skill
+holding `Skill` (an orchestrator, or an agent with `tools: *`) can invoke a skill
 at all.
 
 The consequence is narrow and worth stating precisely: a skill's rules cannot
@@ -93,7 +93,17 @@ assuming those agents share its rules it makes the orchestrator carry them:
 "**Every dispatched agent MUST be instructed to:**" followed by the five rules,
 and, on the live-system bar, "State the bar in the brief - **an agent will not
 infer it**", with ready-made brief boilerplate. The rules reach the agent because
-the orchestrator writes them into the brief, which is the only route available.
+the orchestrator writes them into the brief.
+
+Relay is not the only delivery mechanism, and the second box has two legitimate
+answers. An agent definition may instead carry a `skills:` frontmatter field, which
+injects the named skill's full content into the agent at dispatch: no invocation is
+involved, so the `Skill`-tool limit above does not apply to it. As of 18 July 2026
+no agent uses it (verify with
+`grep -l '^skills:' /media/owner/Workspace/claude-agents/agents/*.md`, which matches
+nothing), but it is the route the fleet is expected to take where a skill is
+load-bearing for an agent's work. A skill delivered by preload is not broken for
+failing to relay; do not report it as such.
 
 ## Scope boundary
 
