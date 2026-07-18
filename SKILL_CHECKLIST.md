@@ -51,11 +51,19 @@ judge whether it matches.
 - [ ] Names the situations the skill applies to, in the words a user would use
 - [ ] Uses the caller's vocabulary, not the skill's internal jargon
 - [ ] Where the skill is easy to confuse with a sibling, the description says which case is which
+- [ ] The description is specific and concise enough to hold its place in a rationed listing
 
 `description` is the entire matching surface: it is what a caller sees when
 deciding whether to invoke, and the body is never consulted in that decision. A
 description that describes what the skill *contains* rather than when to *reach
 for it* will not be found by someone who needs it.
+
+The surface is rationed as well as sole. The listing the model matches against
+draws on roughly 1% of the context window, and when it overflows the
+least-invoked descriptions are dropped first, so a vague or overlong one can fall
+out of consideration before a fitting task ever reaches it. Ask whether it earns
+its slot: concrete trigger phrases and concrete *use when* scenarios, not generic
+praise of the skill, and no longer than that needs.
 
 Compare `disposition-ledger`, which names the specific agents whose output it
 handles (`plan-auditor`, `code-auditor`, `pr-reviewer`, `/code-review`) and the
@@ -78,12 +86,11 @@ invoke it, and that rules reach one only by relay into the brief. A miss on the
 first box is a real finding for the skill under audit, not something to excuse
 by corpus-wide default - report it per skill.
 
-Skills are invoked through the `Skill` tool. All 55 agents in
-`/media/owner/Workspace/claude-agents/agents/` declare an explicit `tools:` list
+Skills are invoked through the `Skill` tool. In the companion agents repo
+(`<your-agents-repo>/agents/`), all 55 agents declare an explicit `tools:` list
 and **not one of them includes `Skill`** (verified 18 July 2026; re-check with
-`grep '^tools:' /media/owner/Workspace/claude-agents/agents/*.md`). Only a caller
-holding `Skill` (an orchestrator, or an agent with `tools: *`) can invoke a skill
-at all.
+`grep '^tools:' <your-agents-repo>/agents/*.md`). Only a caller holding `Skill`
+(an orchestrator, or an agent with `tools: *`) can invoke a skill at all.
 
 The consequence is narrow and worth stating precisely: a skill's rules cannot
 bind a dispatched fleet agent by the agent reading the skill, because the agent
@@ -106,7 +113,7 @@ answers. An agent definition may instead carry a `skills:` frontmatter field, wh
 injects the named skill's full content into the agent at dispatch: no invocation is
 involved, so the `Skill`-tool limit above does not apply to it. As of 18 July 2026
 no agent uses it (verify with
-`grep -l '^skills:' /media/owner/Workspace/claude-agents/agents/*.md`, which matches
+`grep -l '^skills:' <your-agents-repo>/agents/*.md`, which matches
 nothing), but it is the route the fleet is expected to take where a skill is
 load-bearing for an agent's work. A skill delivered by preload is not broken for
 failing to relay; do not report it as such.

@@ -168,6 +168,41 @@ three identical skeptics - diversity catches what redundancy can't.
 `AGENT_VERDICT: PASS` from Step 2 does **not** skip this step - an agent that
 found nothing is itself a claim ("this area is clean") worth one refuter.
 
+## Step 2c - Negative controls (a clean result from a broken instrument looks clean)
+
+Step 2b interrogates findings: *is this claim true?* It cannot catch the opposite
+failure - a control that emits the same signal whether or not the thing it checks
+is true. There is no finding to refute, because the instrument produced a green
+tick, and the green tick is the bug. See the `negative-controls` skill for the
+pattern and its catalogue.
+
+This step applies to two things:
+
+**1. Controls the fleet touched or wrote.** Any test added in Step 3, any lint
+rule, gate, guard, ignore rule, or checklist item in scope. For each, produce the
+broken world once and observe the control fail: delete the guard, invert the
+condition, misspell the name, swap the safe call for the unsafe one. Then restore
+it (verify by diff) and observe it pass. Record both outcomes. A control that
+passes in both worlds is not a control - strengthen it until it can fail, or
+delete it and report the gap honestly.
+
+**2. Any `AGENT_VERDICT: PASS` that rests on a check rather than on reading.**
+If an agent concluded "clean" from a grep, a `check-ignore`, a `systemctl show`,
+or any command whose empty output was read as absence of a problem, confirm that
+command can produce non-empty output at all. Empty because clean and empty
+because the command was aimed at the wrong mechanism are indistinguishable
+without this.
+
+Prioritise by the cost of silent failure: security guards (escaping, auth, bind
+restrictions, credential ignore rules), then gates and flags whose whole purpose
+is to prevent something, then operational checklist items that gate a release.
+
+Where falsifying a control is genuinely impractical - it needs production
+credentials, an irreversible action, hardware you do not have - mark it
+**UNVERIFIED** in the report with what would verify it. Do not let difficulty
+become a reason to assert it works, and do not leave it looking the same as a
+control that was exercised.
+
 ## Step 3 - Triage + fix the findings
 - Read each agent's **report file** (it exists on disk even if the agent died
   mid-run - that's the point of Step 2).

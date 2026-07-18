@@ -220,10 +220,20 @@ dimension would likely still find things, on the evidence above.
 
 ## Verification before you report the loop done
 
-- Every roster agent named in a brief resolves:
-  `ls /media/owner/Workspace/claude-agents/agents/{agent-auditor,skill-auditor,blind-spot-auditor,token-usage-auditor,skill-trigger-auditor,conformance-auditor,fix-regression-checker}.md`
-  A dispatch to an agent that does not exist fails at run time with nothing to
-  indicate why.
+- Every roster agent named in a brief is **dispatchable in the harness actually
+  running this loop**, not merely present as a file. `ls
+  /media/owner/Workspace/claude-agents/agents/{agent-auditor,skill-auditor,blind-spot-auditor,token-usage-auditor,skill-trigger-auditor,conformance-auditor,fix-regression-checker}.md`
+  confirms the definitions exist in the companion repo; it does not confirm the
+  harness you are dispatching from has that name registered as a callable agent
+  type. Check the harness's own agent-type listing (e.g. Claude Code's available
+  `Agent` types) before the round, not after a dispatch fails. A roster name
+  that resolves as a file but is not a registered type in this harness is not a
+  passing check - substitute the nearest available type for that round, and
+  record the substitution in the report and the final summary: which roster
+  name, which type stood in for it. This is the same shape as the `ctest`
+  incident (`SKILL_CHECKLIST.md`'s Self-verification section) applied to agent
+  dispatch: a check that only confirms the file exists reads as coverage for a
+  claim - "this agent can be dispatched" - that it never tested.
 - Every round has a report file whose `## Completion` block reads COMPLETE.
 - Every blocker and major row in the ledger has a disposition.
 - For skill targets: `scripts/check-skills.sh <name>` exits 0 for each skill edited

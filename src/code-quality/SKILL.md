@@ -40,6 +40,7 @@ Not premature optimisation - just not being wasteful by default.
 - **No duplicated work.** Compute or fetch once, pass through. Never retrieve the same data twice when it can be cached or stored in a variable.
 - **No hardcoded values.** Configuration, thresholds, paths, URLs into constants/config/env vars. Group related config in one clear location.
 - **Prefer standard library.** Don't pull dependencies for something a few stdlib lines can do. But when a well-maintained library handles significant functionality, edge cases you'd otherwise miss, or complex error-prone logic - recommend it and explain why it's the better choice.
+- **Prefer the native tool over a workaround.** Before writing a compensating chain (replace-then-split-then-replace), a magic sentinel string that stands in for a real token, or a hand-rolled parser, tokeniser, or serialiser, check whether the stdlib or a mature library solves it natively. The trigger is mechanical: the moment you reach for a placeholder, a sentinel, or a second copy of the same logic, stop and ask whether a tool is designed for this. A workaround is only the right approach when it is the only approach, and you should know you are in that bucket and say why. A second copy of the same logic is the signal to extract the helper, not to keep duplicating.
 - **Efficient data structures and algorithms.** Right collection type for the access pattern. Avoid O(n²) when O(n log n) or O(n) exists without much more complexity. Watch operations inside loops.
 - **Minimise allocations in hot paths.** Reuse buffers, stream over loading entire files, use generators/iterators where appropriate.
 - **Clean up resources.** Close file handles, DB connections, sockets, temp files. Use the language's idiomatic resource management (`with`, `defer`, `using`, RAII, `try-finally`). Never rely on GC for resource cleanup.
@@ -54,6 +55,8 @@ Since the user isn't a professional developer, the code must be especially clear
 - **Separation of concerns.** IO, business logic, presentation stay separate. A function that calculates shouldn't also print or write.
 - **Consistent patterns.** Within a project, handle errors the same way, structure modules the same way, name things the same way. Consistency beats individual cleverness.
 - **Design for extension.** Composition over inheritance. Interfaces/traits to define boundaries. Structure so new features don't require modifying existing logic.
+- **Don't invent abstractions before you need them.** Three similar lines are clearer than a premature helper that hides them. Extract only once the duplication is real and the shared logic has a name worth giving it.
+- **Leave no trash behind.** Remove dead code, stale comments, unused imports, and debug leftovers as part of the change. Left in place they read as load-bearing and mislead the next person who touches the file.
 
 ---
 
@@ -96,10 +99,16 @@ Every code change ends with a short **Testing** section:
 3. **State what "pass" looks like** for each test. The user shouldn't have to guess whether the output is correct.
 4. **Keep it brief.** A few well-chosen tests on critical paths and the nastiest edge cases beat an exhaustive list nobody will run.
 5. **Verify LLM-generated code independently.** Any LLM output (this skill included) can contain subtle security flaws, incorrect API usage, or hallucinated function names. Run static analysis (`bandit` for Python, `eslint-plugin-security` for JavaScript, `cargo clippy` for Rust); test every security-sensitive path manually.
+6. **Treat warnings as errors, and audit outputs not just inputs.** Never suppress, silence, or `# noqa` a warning to get a clean run - find and fix the root cause. If the root cause is genuinely unclear, note what you tried and why it was inconclusive rather than hiding it. Compiler warnings, linter output, and test results are reality; intention is not, so read what the tools actually emitted.
+7. **Run environment discovery through the mechanical gate, don't eyeball it.** If the code resolves a hardware or SDK path, or locates a tool on `PATH`, run the repo's `env_discovery_gate.py` (reference implementation: `music-video-pipeline/audio-analysis/tools/env_discovery_gate.py`, also runnable standalone against other repos) rather than judging it by reading. It catches, mechanically: unversioned vendor paths hardcoded in source (`/opt/rocm` instead of a versioned or glob form), a `which`/`command -v` probe with no registered fallback, a capability-downgrade note that restates `field=value` without naming a cause, and an installer that consumes an env var before resolving it. Three of those were real, passing-tests bugs on real hardware, and the agent review that read the diffs missed all three - which is why this is a script rather than a checklist item you could satisfy by looking.
 
 ---
 
 ## Code review mode
+
+### Verify before you report: no finding without evidence in context
+
+Before a candidate problem enters the findings list, it has to survive verification. For each one: name the specific evidence that proves it is real; run the actual check (compiler, linter, tests); read the output for false positives; and confirm it still holds when you look at the surrounding code. A candidate that skips any of these steps is unverified, and an unverified candidate is not a finding - it goes in notes as a flagged possibility, or not at all. The linter confirms that a pattern exists, not that it is a real problem here; the patterns that look most obvious are exactly where false positives hide; and an issue with no test evidence is an assumption however confident it feels. If a verification step genuinely cannot be run, say so plainly - a finding carrying an honest uncertainty flag is worth more than a confident claim that later turns out wrong.
 
 When reviewing existing code, evaluate against all principles above and report findings in this order:
 
@@ -109,7 +118,7 @@ When reviewing existing code, evaluate against all principles above and report f
 4. **Maintainability** - unclear naming, tangled logic, missing error handling.
 5. **Style and minor** - only if the above are clean.
 
-Each finding states what the problem is, why it matters, and how to fix it. Corrected snippet if the fix is non-obvious. If the code is sound, say so; don't invent problems.
+Each finding states what the problem is, why it matters, and how to fix it. Corrected snippet if the fix is non-obvious. If the code is sound, say so; don't invent problems. Report and fix findings at every severity, Low and Info included - don't defer the small ones on the grounds that they are minor, because a cheap fix now is cheaper than the same fix after later work has built on top of it.
 
 ### Review recommendations file
 
@@ -176,6 +185,8 @@ Direct, concise language. Code snippets in fenced blocks where the fix is non-ob
 - [ ] Error handling follows the three-tier model.
 - [ ] Dependencies justified; stdlib used where practical.
 - [ ] Functions small, single-purpose, clearly named.
+- [ ] Warnings addressed at the root cause - none suppressed, silenced, or ignored.
+- [ ] No dead code, stale comments, unused imports, or debug leftovers.
 - [ ] Complicated sections have brief inline comments explaining *why*.
 - [ ] Network-facing or background: timeouts, rate limits, least-privilege, clean shutdown.
 - [ ] Brief Testing section with edge cases ranked by severity.

@@ -14,6 +14,14 @@ Domain: sourced external research - search, fetch, extract, verify, cite. House 
 
 Distinct from the built-in `deep-research` skill (which fans out search/fetch/verify/synthesize generically): this skill adds the project's own source order, the Brave Search key, the concrete control-slug + content-grep verification steps, and the model-cost discipline that prevents research work from silently running on an oversized model. Use both together where they overlap; this one is the house-specific layer.
 
+## Configure these paths for your setup
+
+The workflow below is built around a local-wiki-first habit. Three locations are specific to one machine; set them for your own setup and read the placeholders as those values throughout:
+
+- `<WIKI_ROOT>` - root of your local wiki corpus, consulted before any web search.
+- `<SEARCH_KEY_FILE>` - a file (such as an `.env`) holding `BRAVE_SEARCH_API_KEY`, your Brave Search API key.
+- `<WIKI_INGEST_DOC>` - the doc describing how to ingest a new source into your wiki.
+
 ## Model policy
 
 A subagent with no `model:` in its frontmatter inherits the parent session's model. On an Opus session that means every dispatched research task runs Opus by default, including the mechanical ones - overkill happens by accident, not by choice. Use the right model for the job; overkill is rarely helpful and usually just wastes tokens.
@@ -63,14 +71,14 @@ If either check cannot be run (no `curl`, no shell access, a WebFetch-only envir
 
 ## House sources
 
-1. **`llm-wiki`** (`/media/owner/Workspace/llm-wiki/wiki/`) is source of truth. Consult it before any web search.
-2. **Brave Search** for web queries where the wiki has no coverage. Key lives in `/media/owner/Workspace/bloodygoodreports/.env` as `BRAVE_SEARCH_API_KEY`:
+1. **Your local wiki** (`<WIKI_ROOT>`) is the source of truth. Consult it before any web search.
+2. **Brave Search** for web queries where the wiki has no coverage. The key lives in `<SEARCH_KEY_FILE>` as `BRAVE_SEARCH_API_KEY`:
    ```bash
    curl -s -H "X-Subscription-Token: $BRAVE_SEARCH_API_KEY" \
      "https://api.search.brave.com/res/v1/web/search?q=<url-encoded query>"
    ```
 3. No Firecrawl key is present on this machine. Don't write or follow instructions that assume one.
-4. **Ingest after lookup.** Once an external lookup returns something worth keeping, write it into the wiki per `/media/owner/Workspace/llm-wiki/CLAUDE.md` (raw source under `raw/`, summary page under `wiki/sources/`, index and log updated) before the task is considered complete. An external fact that never makes it into the wiki gets re-fetched, or worse re-guessed, next time.
+4. **Ingest after lookup.** Once an external lookup returns something worth keeping, write it into the wiki per `<WIKI_INGEST_DOC>` (raw source under `raw/`, summary page under `wiki/sources/`, index and log updated) before the task is considered complete. An external fact that never makes it into the wiki gets re-fetched, or worse re-guessed, next time.
 
 ## Append as you go - survive interruption
 

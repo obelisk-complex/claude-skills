@@ -12,6 +12,10 @@ paths: ".github/workflows/*.yml, .github/workflows/*.yaml, .github/actions/*/act
 
 Generate production-grade workflows with security and maintainability baked in.
 
+## No workflow ships untested
+
+A workflow is not correct because it parses. Before you call one ready: validate the YAML against the GitHub Actions schema; dry-run it locally with `act` (or an equivalent) wherever the workflow allows; inspect the actual execution logs for errors and warnings rather than trusting the green tick; and confirm every referenced action resolves to a real, available version. A workflow that has skipped any of these steps is unverified - say so instead of presenting it as ready. Valid YAML is not a valid workflow; passing on your machine is not passing on the runner, whose environment differs in ways small changes expose; and production monitoring catches a defect too late, after it has already burned minutes, leaked a secret, or shipped a broken deploy. Where a step genuinely cannot be validated without a live runner, name which steps need live-runner verification rather than asserting the whole workflow is correct.
+
 ## Core Principles
 
 GitHub Actions runs untrusted code with access to secrets, deployment credentials, and repo write permissions. Every default here minimises blast radius when something goes wrong.
@@ -194,6 +198,8 @@ strategy:
 **Quote version strings that look like floats** (`'3.10'` not `3.10` - YAML parses the latter as `3.1`). Very common mistake.
 
 Use `continue-on-error: ${{ matrix.experimental || false }}` for experimental entries that shouldn't fail the build.
+
+Only include combinations you actually need to cover. Every cell is real runner minutes, so prune the matrix to the versions and platforms whose behaviour genuinely differs rather than filling the grid for completeness.
 
 ---
 

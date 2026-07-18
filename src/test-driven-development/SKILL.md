@@ -310,6 +310,14 @@ describe('TaskService', () => {
 | Snapshot abuse | Large snapshots nobody reviews, break on any change | Use snapshots sparingly and review every change |
 | No test isolation | Tests pass individually but fail together | Each test sets up and tears down its own state |
 | Mocking everything | Tests pass but production breaks | Prefer real implementations > fakes > stubs > mocks. Mock only at boundaries where real deps are slow or non-deterministic |
+| Assertion too weak to discriminate | Passes whether or not the bug is present, so it guards nothing. `assert err == nil` where the broken path also returns nil | Introduce the bug and watch the test fail, then revert. See `negative-controls` |
+| Vacuously-constructed fixture | The input is neutered before the code under test sees it - a hostile payload HTML-escaped by the marshaller that built it | Assert the fixture reaches the code in the shape you intended, then falsify as above |
+
+Red-green already contains this discipline for features: you see the test fail
+before you make it pass. The `negative-controls` skill extends the same demand to
+everything that is *not* a test - lint rules, CI gates, feature flags, ignore
+rules, runbook checks - all of which routinely ship having never once been
+observed failing.
 
 ## Browser Testing with DevTools
 
