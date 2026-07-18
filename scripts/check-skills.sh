@@ -146,7 +146,13 @@ for name in "${names[@]}"; do
     fail "skills/$name.skill has not been built"
     continue
   fi
-  if ! unzip -l "$archive" 2>/dev/null | grep -q "[[:space:]]$name/SKILL.md$"; then
+  # Capture the listing before testing it. Piping unzip straight into `grep -q`
+  # races: grep exits at the first match and closes the pipe, unzip takes SIGPIPE
+  # and exits 141, pipefail (line 14) propagates it, and `!` inverts it into a
+  # FAIL on a healthy archive. Reproduced 4 times in 25 runs under load and 0
+  # times in 40 on an idle machine, which is what makes it look like a flake.
+  archive_listing=$(unzip -l "$archive" 2>/dev/null)
+  if ! printf '%s\n' "$archive_listing" | grep -q "[[:space:]]$name/SKILL.md$"; then
     fail "skills/$name.skill does not contain $name/SKILL.md"
     continue
   fi
@@ -174,7 +180,12 @@ for name in "${names[@]}"; do
   fi
   if ! diff_out=$(diff -r "$work/expected/$name" "$work/actual/$name" 2>&1); then
     fail "skills/$name.skill is out of date with src/$name; run scripts/build-skills.sh $name"
-    printf '%s\n' "$diff_out" | sed 's/^/        /' | head -10
+    # head -10 closes the pipe and sends sed SIGPIPE (exit 141), which pipefail
+    # turns into a non-zero pipeline status. Harmless only because this script
+    # sets -uo pipefail and not -e, so a bare statement's status is discarded.
+    # Truncating first keeps it harmless if anyone ever adds -e. Same defect as
+    # the unzip pipeline above, which was live rather than latent.
+    printf '%s\n' "$diff_out" | head -10 | sed 's/^/        /'
   fi
 done
 
