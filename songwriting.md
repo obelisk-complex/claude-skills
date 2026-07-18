@@ -6,7 +6,7 @@ Co-writes and structures songs, lyrics plus the per-section musical and producti
 
 ## What it does
 
-Domain: songwriting craft and Suno-style production formatting. Reader: anyone turning a rough lyric or idea into a full, sectioned song for a text-to-music generator, including with an optional personal voice reference for the operator's own catalogue, released as Jon The Beardless.
+Domain: songwriting craft and Suno-style production formatting. Reader: anyone turning a rough lyric or idea into a full, sectioned song for a text-to-music generator, including with an optional personal voice reference for the operator's own catalogue.
 
 The core principle is to mean it all the way: sincerity is the engine of both the love songs and the jokes, and a song that winks at its own joke dies. The process runs from rough material to finished draft: gather the real memory or detail and object-write it first, senses only, before drafting a line; pick a form and a set of style traits, drafting words and arrangement together; tighten by cutting syllables, preferring slant and internal rhyme over forced perfect rhyme, keeping one concrete image per section, and planting a detail early to pay it off late; then take an independent read from more than one model before iterating in the open, showing adopted-versus-rejected options rather than just the final choice.
 

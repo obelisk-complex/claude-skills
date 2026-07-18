@@ -1,6 +1,6 @@
 ---
 name: songwriting
-description: Use when writing, structuring, or polishing a song or its lyrics, including turning a rough idea or lyric sheet into a sectioned song with production direction for a text-to-music generator; especially for the user's own tracks (Jon The Beardless).
+description: Use when writing, structuring, or polishing a song or its lyrics, including turning a rough idea or lyric sheet into a sectioned song with production direction for a text-to-music generator; especially for the operator's own tracks.
 ---
 
 # Songwriting
