@@ -91,6 +91,13 @@ scripts/build-skills.sh code-quality      # just one
 
 Because a skill's body is loaded into the calling agent's context, its length is a cost paid by every user of that skill. The root `.md` has no such constraint.
 
+`SKILL_CHECKLIST.md` is the standard a skill is written and audited against. Its packaging section is enforced by `scripts/check-skills.sh`, which verifies each skill would load and that its built archive still matches `src/`; the rest needs a reader.
+
+```sh
+scripts/check-skills.sh                   # all skills
+scripts/check-skills.sh code-quality      # just one
+```
+
 ## Licence
 
 MIT
