@@ -1,5 +1,5 @@
 ---
-name: Model-Bakeoff
+name: model-bakeoff
 description: Use when choosing between models or prompts by measuring them against ground truth - benchmarking extraction, classification or OCR candidates, comparing an incumbent against alternatives, or when a model evaluation has produced numbers you are about to act on.
 ---
 
