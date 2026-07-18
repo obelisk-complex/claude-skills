@@ -27,7 +27,6 @@ A collection of custom skills for Claude, built to fill gaps in the default tool
 | [github-actions](/github-actions.md) | CI/CD workflows, reusable workflows, composite actions, and custom actions with security baked in. |
 | [idea-refine](/idea-refine.md) | Refines raw ideas into sharp, actionable concepts through structured divergent and convergent thinking. |
 | [incremental-implementation](/incremental-implementation.md) | Delivers changes incrementally in thin vertical slices. Implements one piece, tests it, verifies it, then expands. |
-| [interview](/interview.md) | Structured requirements interview before building. Explores codebase, researches domain, asks targeted questions, runs gap analysis, writes spec file. |
 | [model-bakeoff](/model-bakeoff.md) | Compares models or prompts against ground truth without producing a number that looks like evidence and is not. Do-nothing baselines, failure accounting, measured cost, repeat runs. |
 | [observability-and-instrumentation](/observability-and-instrumentation.md) | Instruments code so production behaviour is visible and diagnosable through logging, metrics, tracing, and alerting. |
 | [pcb-engineer](/pcb-engineer.md) | Full PCB design lifecycle from consulting through manufacturing prep. KiCad 8+, educational by default. |
