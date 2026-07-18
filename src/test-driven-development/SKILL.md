@@ -127,6 +127,8 @@ export async function completeTask(id: string): Promise<Task> {
 // Step 3: Test passes → bug fixed, regression guarded
 ```
 
+**The fix carries the reason, not just the test.** The test guards the behaviour from elsewhere in the tree; the comment at the fix site is what stops a later editor removing the line as pointless, because an argument has to be deleted deliberately while a bare assertion reads as noise. Name the failure and cite where it happens - `// completedAt stayed null and the reporting query dropped the row - see reports/daily.ts:88`, not `// set the timestamp`.
+
 ### "It fails against the old code" is a claim, not a given
 
 RED is not a box to tick, it is an **observation**. Run the test against the old code and read the output, because *how* it fails decides whether it pins anything:

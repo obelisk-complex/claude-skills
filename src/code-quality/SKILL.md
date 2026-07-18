@@ -80,6 +80,7 @@ Authentication, authorisation, input validation, cryptographic operations → de
 ## Comments and documentation
 
 - **Comment complicated sections inline - explain *why*, not *what*.** The code shows what happens; the comment explains reasoning.
+- **When a fix exists because of a specific failure, name the failure and cite where it happens.** A comment carrying an argument is load-bearing: a later editor tidying up has to delete the argument deliberately, whereas a bare assertion reads as noise and goes. Not `// must be non-empty` but `// empty here means the regex matched nothing and ctest exits 0 having run no tests - see tests/CMakeLists.txt:47`.
 - **Minimal.** One or two concise lines, reasons in order of importance.
 - **Don't justify the obvious.** Well-named code is self-documenting. Reserve comments for non-obvious decisions: workarounds, performance choices, security rationale, external-system constraints.
 - **Document public interfaces.** Functions, classes, modules other code depends on get a brief docstring or header: purpose, parameters, return values, notable failure modes.
