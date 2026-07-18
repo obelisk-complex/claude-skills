@@ -17,6 +17,7 @@ A collection of custom skills for Claude, built to fill gaps in the default tool
 | [cosmos-compose](/cosmos-compose.md) | Cosmos Cloud container configs, reverse proxy routes, OpenID/SSO, and platform administration. |
 | [debugging-and-error-recovery](/debugging-and-error-recovery.md) | Systematic root-cause debugging. Use when tests fail, builds break, or behaviour doesn't match expectations. |
 | [deprecation-and-migration](/deprecation-and-migration.md) | Manages deprecation and migration. Use when removing old systems, APIs, or features, or deciding whether to maintain or sunset existing code. |
+| [disposition-ledger](/disposition-ledger.md) | Tracks audit and review findings to an explicit accept, reject, or defer before work is called done. Use when blockers risk evaporating into conversation. |
 | [documentation-and-adrs](/documentation-and-adrs.md) | Records decisions and documentation. Use when making architectural decisions, changing public APIs, or recording context for future engineers and agents. |
 | [doubt-driven-development](/doubt-driven-development.md) | Subjects every non-trivial decision to a fresh-context adversarial review before it stands. Use when correctness matters more than speed. |
 | [flaky-tests](/flaky-tests.md) | Diagnoses flaky and intermittently-failing tests: timeouts that budget the wrong thing, skip()-on-timeout, process-global mock pollution, live-service leakage, under-specified assertions. Mutation-check every fix; a streak of green runs is weak evidence. |
@@ -27,17 +28,22 @@ A collection of custom skills for Claude, built to fill gaps in the default tool
 | [idea-refine](/idea-refine.md) | Refines raw ideas into sharp, actionable concepts through structured divergent and convergent thinking. |
 | [incremental-implementation](/incremental-implementation.md) | Delivers changes incrementally in thin vertical slices. Implements one piece, tests it, verifies it, then expands. |
 | [interview](/interview.md) | Structured requirements interview before building. Explores codebase, researches domain, asks targeted questions, runs gap analysis, writes spec file. |
+| [model-bakeoff](/model-bakeoff.md) | Compares models or prompts against ground truth without producing a number that looks like evidence and is not. Do-nothing baselines, failure accounting, measured cost, repeat runs. |
 | [observability-and-instrumentation](/observability-and-instrumentation.md) | Instruments code so production behaviour is visible and diagnosable through logging, metrics, tracing, and alerting. |
 | [pcb-engineer](/pcb-engineer.md) | Full PCB design lifecycle from consulting through manufacturing prep. KiCad 8+, educational by default. |
 | [performance-optimization](/performance-optimization.md) | Optimises application performance. Measures before optimising, identifies bottlenecks, fixes, and guards against regression. |
 | [planning-and-task-breakdown](/planning-and-task-breakdown.md) | Breaks work into ordered, verifiable tasks with explicit acceptance criteria and dependency graphs. |
+| [readme-conventions](/readme-conventions.md) | Section order, benefit-before-mechanism ordering, disclosure blocks, badge honesty, and screenshot policy for README authoring. |
+| [research](/research.md) | House layer over generic deep research: source order, control-slug and content-grep verification, briefing rules for fan-out, and a model-cost policy for dispatched research. |
 | [security-and-hardening](/security-and-hardening.md) | Security-first development practices: input validation, authentication, authorisation, secrets management, and threat modelling. |
 | [shipping-and-launch](/shipping-and-launch.md) | Prepares production launches with pre-launch checklists, feature flag strategy, staged rollout, monitoring, and rollback plans. |
+| [songwriting](/songwriting.md) | Structures and polishes songs and lyrics, and formats them for a text-to-music generator. Carries a craft reference, a blocked-words list, and the operator's own voice reference. |
 | [source-driven-development](/source-driven-development.md) | Grounds every implementation decision in official documentation. Cites sources for all framework-specific code. |
 | [spec-driven-development](/spec-driven-development.md) | Creates structured specifications before writing code. Four-phase gated workflow: specify, plan, task, implement. |
 | [svg-illustrator](/svg-illustrator.md) | Hand-author stylised SVG illustrations (covers, figures, icons) that read clearly and survive print-PDF rendering. Silhouette library, atmospheric perspective, composition rules, WeasyPrint support matrix, a11y and sanitisation baseline. |
 | [test-driven-development](/test-driven-development.md) | Drives development with tests. Write a failing test before making it pass. For bug fixes, reproduce with a test first. |
 | [upstream-prs-to-hermes-agent](/upstream-prs-to-hermes-agent.md) | Sends a change from a fork up to NousResearch/hermes-agent. Their CONTRIBUTING rules (and the one that is wrong), the contributor-check gate, the non-hermetic suite, and why the human opens the PR. |
+| [wiki-first](/wiki-first.md) | Queries the local air-gapped wiki corpus before any web search, then feeds back what the web taught so the next agent inherits it. |
 
 ## References
 
@@ -56,6 +62,35 @@ The `references/` directory contains quick-reference checklists for use alongsid
 ## Installation
 
 Download the `.skill` file for any skill you want and install it via Claude's skill management interface.
+
+To install every skill locally instead:
+
+```sh
+scripts/install-skills.sh                 # all skills
+scripts/install-skills.sh code-quality    # just one
+scripts/install-skills.sh --check         # verify what is installed, change nothing
+```
+
+Claude Code loads `~/.claude/skills/<name>/SKILL.md`. A bare `~/.claude/skills/<name>.md` is never loaded, and nothing reports that it was skipped, so a skill installed as a flat file is silently inert. `--check` exits non-zero when a skill has no loadable install.
+
+## Repository layout
+
+Each skill lives in three places, and they are not interchangeable:
+
+| Path | Role |
+|---|---|
+| `src/<name>/SKILL.md` | **Source of truth.** The skill itself, loaded into the agent's context at run time. Edit here. |
+| `skills/<name>.skill` | Build artefact, produced from `src/` by `scripts/build-skills.sh`. Never edit directly; the next build overwrites it. |
+| `<name>.md` | Human-facing documentation, read on GitHub. Hand-written, not generated. |
+
+Rebuild after editing a skill:
+
+```sh
+scripts/build-skills.sh                   # all skills
+scripts/build-skills.sh code-quality      # just one
+```
+
+Because a skill's body is loaded into the calling agent's context, its length is a cost paid by every user of that skill. The root `.md` has no such constraint.
 
 ## Licence
 
