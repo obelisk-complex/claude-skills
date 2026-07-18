@@ -48,8 +48,37 @@ fail() {
 
 # Extract the YAML frontmatter block: everything between the leading '---' and
 # the next '---'. Empty output means there was no frontmatter to read.
+#
+# The block is buffered and emitted only once the closing '---' is seen. An
+# opening delimiter with no closing one is not frontmatter, and printing the body
+# instead would let a 'description:' written in prose satisfy the checks below.
 frontmatter() {
-  awk 'NR==1 && $0!="---" {exit} NR==1 {next} /^---[[:space:]]*$/ {exit} {print}' "$1"
+  awk '
+    NR==1 && $0!="---" {exit}
+    NR==1 {next}
+    /^---[[:space:]]*$/ {closed=1; exit}
+    {buf = buf $0 "\n"}
+    END {if (closed) printf "%s", buf}
+  ' "$1"
+}
+
+# Print the value of the frontmatter's description key, including any folded or
+# literal continuation lines, and stopping at the next top-level key.
+#
+# Reading to the end of the frontmatter instead would let a key beneath
+# 'description:' (github-actions carries 'paths:' there) supply the text that the
+# emptiness check reads, so a skill with no matching surface at all would pass.
+description_value() {
+  awk '
+    !seen && /^description:/ {
+      seen = 1
+      sub(/^description:[[:space:]]*/, "")
+      print
+      next
+    }
+    seen && /^([[:space:]]|$)/ {print; next}
+    seen {exit}
+  '
 }
 
 tmp_root=$(mktemp -d)
@@ -81,8 +110,15 @@ for name in "${names[@]}"; do
   else
     fm_name=$(printf '%s\n' "$fm" | sed -n 's/^name:[[:space:]]*//p' | head -1)
     fm_name=${fm_name%"${fm_name##*[![:space:]]}"}
+    # YAML allows the value to be quoted. Comparing the quotes against a bare
+    # directory name would fail a correct skill, and a gate that cries wolf is
+    # one people learn to ignore.
+    case $fm_name in
+      \"*\") fm_name=${fm_name#\"}; fm_name=${fm_name%\"} ;;
+      \'*\') fm_name=${fm_name#\'}; fm_name=${fm_name%\'} ;;
+    esac
     if [ -z "$fm_name" ]; then
-      fail "src/$name/SKILL.md frontmatter has no 'name' field"
+      fail "src/$name/SKILL.md frontmatter has no usable 'name' field"
     elif [ "$fm_name" != "$name" ]; then
       fail "frontmatter name '$fm_name' does not match directory 'src/$name'"
     fi
@@ -91,8 +127,7 @@ for name in "${names[@]}"; do
     else
       # A description that is blank on its own line and has no continuation is
       # an empty matching surface, which is the same as having none.
-      desc_body=$(printf '%s\n' "$fm" | sed -n '/^description:/,$p' \
-        | sed '1s/^description:[[:space:]]*//' | tr -d '>|[:space:]')
+      desc_body=$(printf '%s\n' "$fm" | description_value | tr -d '>|[:space:]')
       if [ -z "$desc_body" ]; then
         fail "src/$name/SKILL.md frontmatter 'description' is empty"
       fi
@@ -130,7 +165,8 @@ for name in "${names[@]}"; do
     while IFS= read -r ignored; do
       [ -n "$ignored" ] || continue
       rm -rf "$work/expected/${ignored#src/}"
-    done < <(git -C "$repo_root" ls-files --others --ignored --exclude-standard -- "src/$name")
+    done < <(git -C "$repo_root" -c core.quotePath=false \
+      ls-files --others --ignored --exclude-standard -- "src/$name")
   fi
   if ! unzip -q -o "$archive" -d "$work/actual" 2>/dev/null; then
     fail "skills/$name.skill could not be extracted"

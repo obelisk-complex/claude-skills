@@ -54,7 +54,10 @@ for name in "${names[@]}"; do
     while IFS= read -r ignored; do
       [ -n "$ignored" ] || continue
       excludes+=("${ignored#src/}")
-    done < <(git -C "$repo_root" ls-files --others --ignored --exclude-standard -- "src/$name")
+      # core.quotePath would octal-escape a non-ASCII name, so the exclude
+      # pattern would not match and a local-only file would ship in the zip.
+    done < <(git -C "$repo_root" -c core.quotePath=false \
+      ls-files --others --ignored --exclude-standard -- "src/$name")
   fi
 
   rm -f "$out_dir/$name.skill"

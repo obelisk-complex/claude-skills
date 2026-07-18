@@ -25,7 +25,7 @@ Designed for users who are not professional developers but rely on Claude to mak
 - Principles are in strict priority order: when two conflict, the higher-listed one wins
 - The guiding principle is the end user's experience, not developer convenience
 - Reviews produce a self-contained markdown file someone can read without the conversation
-- Comments explain *why*, not *what* -- well-named code is self-documenting
+- Comments explain *why*, not *what* - well-named code is self-documenting
 - A comment on a fix names the failure it prevents and cites where it happens; an argument survives later editing, a bare assertion gets tidied away
 
 ## Verification Gate (Iron Law)

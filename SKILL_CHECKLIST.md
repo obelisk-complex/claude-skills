@@ -25,11 +25,16 @@ with nothing reporting it.
 - [ ] `skills/<name>.skill` exists and contains `<name>/SKILL.md` at that path
 - [ ] The archive matches `src/<name>/`, ignoring git-ignored files
 
-The last item is the one that closes the loop. `build-skills.sh` does not
-install and `install-skills.sh` does not rebuild, so before this check nothing
-noticed an edit to `src/` that was never packaged; the caller kept loading the
-old body. Each skill lives in three places (root `.md`, `skills/<name>.skill`,
-installed `~/.claude/skills/<name>/SKILL.md`) and they must move together.
+Each skill lives in three places (root `.md`, `skills/<name>.skill`, installed
+`~/.claude/skills/<name>/SKILL.md`) and they must move together. The last item
+closes two of the three: `build-skills.sh` does not install and
+`install-skills.sh` does not rebuild, so before this check nothing noticed an
+edit to `src/` that was never packaged and the caller kept loading the old body.
+
+The installed copy is not compared to anything. The script never reads
+`~/.claude/skills/`, deliberately, because it must run in CI where that
+directory does not exist. A green run therefore does not rule out a stale
+install; run `scripts/install-skills.sh` to do that.
 
 Run it after any edit under `src/`:
 
@@ -65,6 +70,10 @@ skill that fails it looks entirely correct on the page.
 
 - [ ] The skill states whether its consumer is the invoking orchestrator or a dispatched agent
 - [ ] Where rules are meant to reach a dispatched agent, the skill says how they get there
+
+No skill in the corpus states its consumer explicitly yet. A miss on the first
+box is an instance of a known corpus-wide gap, not a defect in the skill under
+audit; report it once for the set rather than once per skill.
 
 Skills are invoked through the `Skill` tool. All 55 agents in
 `/media/owner/Workspace/claude-agents/agents/` declare an explicit `tools:` list
@@ -172,8 +181,10 @@ The house shape, as the corpus actually uses it (verified across 35 documents on
 - [ ] Quillx badge line, with a sentence on what a human defined and refined (35/35)
 - [ ] Prose description of the skill (35/35)
 - [ ] `## What it does` (34/35)
-- [ ] Skill-specific middle sections
 - [ ] `## Licence` closing the file (32/35)
+
+Between those two the sections are skill-specific and the corpus shares no
+convention, so there is nothing to check there.
 
 There is no `## Installation` convention; two files have one and the README
 carries the real instructions. Do not add one.
@@ -189,6 +200,12 @@ copy of the same information, drifting exactly like the three this plan exists t
 fix. So the script checks that the root doc exists; a reader decides whether it
 should have moved. `code-quality` has already drifted this way and is being
 handled separately.
+
+A cheaper mechanical option exists and is not taken, recorded here so a later
+author knows it was weighed rather than missed: warn when `<name>.md` and
+`src/<name>/SKILL.md` were last changed in different commits. It needs no
+manifest, but it warns on every deliberate edit to one of the 8 independent
+docs, which puts it under the same suppression pressure by another route.
 
 ## Humane prompting gate
 
@@ -216,7 +233,9 @@ handled separately.
   deliberately not wired into `check-skills.sh`: 21 of 35 bodies currently hit it,
   and a gate that is red the day it lands gets suppressed rather than fixed. Add
   it to the script once the corpus is clean, so it starts green and any new hit
-  is a real regression.
+  is a real regression. No task owns that promotion. The trigger is the tripwire
+  itself: whoever runs it and gets no output is the one holding the trigger, and
+  wiring it in is theirs to do.
 - British English
 - Single blank line between sections, never double
 - Keep the skill project-agnostic unless it is deliberately house-specific
