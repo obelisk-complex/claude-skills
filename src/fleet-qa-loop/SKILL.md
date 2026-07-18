@@ -100,9 +100,9 @@ where independent):
 1. **Create its report file FIRST** - a skeleton with section headers - before any
    deep analysis: `<target>/docs/qa-review/<agent>.md` (or `./qa-review/<agent>.md`
    if the target isn't a repo).
-2. **Append each finding to that file the moment it is found.** Never buffer all
-   findings for one final write. *An incomplete report on disk beats a complete
-   report lost to truncation or context exhaustion.* Skeleton-first, append-as-you-go.
+2. **Append each finding to that file the moment it is found**, per
+   `/media/owner/Workspace/claude-agents/REPORT_PROTOCOL.md`'s skeleton-first,
+   append-as-you-go procedure - reference it, don't restate it here.
 3. **Cite the failure path in every finding.** State the symptom *and* the
    `file:line` of the code path that produces it. A severity claim with no code
    path behind it is a guess wearing a lab coat - mark it `UNVERIFIED:` or drop

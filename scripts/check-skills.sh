@@ -180,12 +180,14 @@ for name in "${names[@]}"; do
   fi
   if ! diff_out=$(diff -r "$work/expected/$name" "$work/actual/$name" 2>&1); then
     fail "skills/$name.skill is out of date with src/$name; run scripts/build-skills.sh $name"
-    # head -10 closes the pipe and sends sed SIGPIPE (exit 141), which pipefail
-    # turns into a non-zero pipeline status. Harmless only because this script
-    # sets -uo pipefail and not -e, so a bare statement's status is discarded.
-    # Truncating first keeps it harmless if anyone ever adds -e. Same defect as
-    # the unzip pipeline above, which was live rather than latent.
-    printf '%s\n' "$diff_out" | head -10 | sed 's/^/        /'
+    # Same shape as the unzip pipeline above: piping straight into `head -10`
+    # lets it close the pipe early and SIGPIPE whatever is still writing, which
+    # pipefail turns into a non-zero status. Truncate via a here-string first
+    # (no live producer process for head to signal), then pipe the
+    # already-short result through sed, which reads to EOF and so never closes
+    # early.
+    truncated=$(head -10 <<< "$diff_out")
+    printf '%s\n' "$truncated" | sed 's/^/        /'
   fi
 done
 

@@ -71,9 +71,12 @@ skill that fails it looks entirely correct on the page.
 - [ ] The skill states whether its consumer is the invoking orchestrator or a dispatched agent
 - [ ] Where rules are meant to reach a dispatched agent, the skill says how they get there
 
-No skill in the corpus states its consumer explicitly yet. A miss on the first
-box is an instance of a known corpus-wide gap, not a defect in the skill under
-audit; report it once for the set rather than once per skill.
+Most skills in the corpus do not yet state their consumer explicitly.
+`fleet-audit-loop`'s "Consumer and reach" section is the model for what doing so
+looks like: it states plainly that no dispatched auditor in its own roster can
+invoke it, and that rules reach one only by relay into the brief. A miss on the
+first box is a real finding for the skill under audit, not something to excuse
+by corpus-wide default - report it per skill.
 
 Skills are invoked through the `Skill` tool. All 55 agents in
 `/media/owner/Workspace/claude-agents/agents/` declare an explicit `tools:` list
@@ -88,12 +91,15 @@ cannot invoke it. A skill written as though the auditor it dispatches will read
 its rules is silently broken. This is not a reason to avoid skills that dispatch
 agents; it is a reason for such a skill to relay its rules into the brief.
 
-`fleet-qa-loop` is the worked example. It dispatches a fleet, and instead of
-assuming those agents share its rules it makes the orchestrator carry them:
-"**Every dispatched agent MUST be instructed to:**" followed by the five rules,
-and, on the live-system bar, "State the bar in the brief - **an agent will not
-infer it**", with ready-made brief boilerplate. The rules reach the agent because
-the orchestrator writes them into the brief.
+`fleet-audit-loop` is now the sharper worked example: it marks each relay-bound
+rule with **[relay]**, so a brief-writer can find them at a glance, a convention
+`fleet-qa-loop` lacks. `fleet-qa-loop` still illustrates the underlying
+mechanism: it dispatches a fleet, and instead of assuming those agents share its
+rules it makes the orchestrator carry them: "**Every dispatched agent MUST be
+instructed to:**" followed by the numbered rules, and, on the live-system bar,
+"State the bar in the brief - **an agent will not infer it**", with ready-made
+brief boilerplate. The rules reach the agent because the orchestrator writes
+them into the brief.
 
 Relay is not the only delivery mechanism, and the second box has two legitimate
 answers. An agent definition may instead carry a `skills:` frontmatter field, which
@@ -173,8 +179,8 @@ output leaves the reader to infer the boundary.
 
 A gate that cannot fail is read as coverage and is worse than no gate: an audit
 found a `ctest` invocation exiting 0 when its regex matched nothing, so the gate
-passed having run no tests. When adding a check to a skill, confirm it can report
-failure before claiming it as a gate.
+passed having run no tests. When adding a check to a skill, confirm it reports
+failure on a broken input before claiming it as a gate.
 
 Where a skill asserts facts, it should invite abstention explicitly: an unverified
 claim marked uncertain is more useful than a confident guess.
@@ -184,14 +190,14 @@ claim marked uncertain is more useful than a confident guess.
 **Partly gated.** `check-skills.sh` confirms `<name>.md` exists; its shape and
 its agreement with the skill body need a reader.
 
-The house shape, as the corpus actually uses it (verified across 35 documents on
+The house shape, as the corpus actually uses it (verified across 36 documents on
 2026-07-18):
 
-- [ ] `# <name>` heading matching the filename (35/35)
-- [ ] Quillx badge line, with a sentence on what a human defined and refined (35/35)
-- [ ] Prose description of the skill (35/35)
-- [ ] `## What it does` (34/35)
-- [ ] `## Licence` closing the file (32/35)
+- [ ] `# <name>` heading matching the filename (36/36)
+- [ ] Quillx badge line, with a sentence on what a human defined and refined (36/36)
+- [ ] Prose description of the skill (36/36)
+- [ ] `## What it does` (35/36)
+- [ ] `## Licence` closing the file (33/36)
 
 Between those two the sections are skill-specific and the corpus shares no
 convention, so there is nothing to check there.
@@ -201,7 +207,7 @@ carries the real instructions. Do not add one.
 
 - [ ] Where the root doc mirrors the skill body, an edit to one is made to both
 
-This last item needs a reader and deliberately has no script. Of the 35 skills,
+This last item needs a reader and deliberately has no script. Of the 36 skills,
 about 20 have root docs that are the skill body plus a header and footer, and
 about 8 are genuinely independent artefacts written for a different audience. A
 mechanical body-equality check would therefore fail those 8 on every run, and
@@ -240,7 +246,7 @@ docs, which puts it under the same suppression pressure by another route.
 - Use single hyphens for dashes in prose, never em-dashes or double hyphens.
   Tripwire: `grep -rlP '\x{2014}' src/*/SKILL.md` (the escape keeps this file
   from matching its own pattern). This is mechanically checkable and
-  deliberately not wired into `check-skills.sh`: 21 of 35 bodies currently hit it,
+  deliberately not wired into `check-skills.sh`: 21 of 36 bodies currently hit it,
   and a gate that is red the day it lands gets suppressed rather than fixed. Add
   it to the script once the corpus is clean, so it starts green and any new hit
   is a real regression. No task owns that promotion. The trigger is the tripwire

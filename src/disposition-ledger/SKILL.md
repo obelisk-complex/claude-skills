@@ -54,11 +54,11 @@ Carry each row's **evidence**, not just its conclusion. "We looked at this, it i
 
 A row is carried only while its evidence still stands. **If the evidence cites a file that has been edited since, the row is reopened, not carried** - the artefact moved underneath the reasoning, which has not been rechecked against it.
 
-**This is the deliberate exception to the anchoring rule.** Everywhere else, briefing an auditor with specific prior findings biases it toward confirming them rather than checking, so class-level patterns transfer and instance-level detail does not. The disproved list is the exception because it removes ground from the search rather than directing it. Both rules are intended; the tension between them is not a defect to be edited out.
+**Carrying the disproved list runs against `fleet-audit-loop`'s "Brief with classes, not instances" rule (Step 3), on purpose.** That rule biases a briefed auditor toward confirming named instances rather than checking, so it briefs recurring patterns and withholds the specific defects already found. The disproved list inverts that: naming the specific rejected instance is what stops it being re-investigated, because it removes ground from the search rather than directing it. Both rules are intended; the tension between them is not a defect to be edited out.
 
 ## Append-as-you-go
 
-Write the row the moment a finding is dispositioned, not in a batch at the end. An interrupted review session should leave a partial ledger on disk with N rows dispositioned and M still blank, not zero rows because the write was deferred to "when I'm done." This mirrors the same rule now in the `research` skill: work in progress must survive interruption.
+Write the row the moment a finding is dispositioned, not in a batch at the end. `/media/owner/Workspace/claude-agents/REPORT_PROTOCOL.md` owns the append-as-you-go rule and the failure it prevents; this is that same rule applied to ledger rows instead of report findings - reference it, don't restate it here.
 
 ## Where it plugs in
 

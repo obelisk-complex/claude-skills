@@ -17,8 +17,13 @@ exhausted, not when a round comes back clean.
 
 - **`fleet-qa-loop`** governs *code*: mechanical linters first, then the QA fleet,
   until lint is clean and tests are green. Where an idea below is already stated
-  there (append-as-you-go reporting, adversarial verification before fixing,
-  terminate on CLEAN or STALLED), this skill references it rather than restating it.
+  there (append-as-you-go reporting, adversarial verification before fixing),
+  this skill references it rather than restating it. **Termination is not
+  shared.** This skill's own terminal states are DIMENSIONS EXHAUSTED and
+  STALLED (Step 6) - it has no CLEAN state. Nor is the iteration cap shared:
+  this skill's six-round roster (Step 2) is fixed, not `fleet-qa-loop`'s default
+  cap of 5 - round 6 verifies rounds 1-5's fixes, so a cap of 5 would end the
+  loop before its own regression check runs.
 - **`plan-audit-loop`** (an agent, at `/media/owner/Workspace/claude-agents/agents/plan-audit-loop.md`)
   governs *plans*: it loops `plan-auditor` and `requirements-auditor` over a plan
   document before execution begins. It is not superseded or wrapped by this skill.
@@ -38,13 +43,18 @@ dimension-to-agent mapping in Step 2.
 
 ## Consumer and reach
 
-**No dispatched auditor can invoke this skill.** All 55 agents in
-`/media/owner/Workspace/claude-agents/agents/` declare an explicit `tools:` list and
-not one includes `Skill` (verified 18 July 2026; re-check with
-`grep -h '^tools:' /media/owner/Workspace/claude-agents/agents/*.md`). **Every rule
-below that an auditor must follow reaches it only because the orchestrator copies it
-into that agent's dispatch brief.** Sections marked **[relay]** are text to be
-written into a brief; everything else is yours to execute.
+**Only a caller holding `Skill` (an orchestrator, or an agent with `tools: *`)
+can invoke a skill at all** (`SKILL_CHECKLIST.md:82-83`). None of this loop's
+seven roster auditors do: all 55 agents in
+`/media/owner/Workspace/claude-agents/agents/` declare an explicit `tools:` list
+and not one includes `Skill` or `*` (verified 18 July 2026; re-check with
+`grep '^tools:' /media/owner/Workspace/claude-agents/agents/*.md`). Built-in
+dispatchable types outside that directory - `general-purpose`, `claude`,
+`Explore` - do carry `tools: *` and can invoke a skill; this roster names none
+of them. **Every rule below that a roster auditor must follow reaches it only
+because the orchestrator copies it into that agent's dispatch brief.** Sections
+marked **[relay]** are text to be written into a brief; everything else is yours
+to execute.
 
 As of 18 July 2026 the orchestrator is also this skill's only reader, because no
 agent carries a `skills:` preload (verify:
@@ -132,19 +142,31 @@ the brief with their evidence, per the `disposition-ledger` skill's
 the reopen condition when the cited file has since been edited. Reference it;
 do not restate it.
 
-**[relay] Report to disk before replying.** State in every brief: *"Write your
-report skeleton before investigating and append each finding as you confirm it,
-per `REPORT_PROTOCOL.md`. Write the `## Completion` block before you send your
-final message."* A reply is lost if the agent goes idle; a file is not.
+**Report path convention.** `.superpowers/sdd/audit/<round>-<dimension-slug>.md`
+- e.g. `.superpowers/sdd/audit/1-structural-conformance.md`,
+`.superpowers/sdd/audit/6-fix-regression.md`. The orchestrator sets this path and
+puts it in the brief; it is not left to `REPORT_PROTOCOL.md`'s default naming,
+because Step 1 has to check for a specific previous-round file without guessing
+at a timestamp.
+
+**[relay] Report to disk before replying.** Copy `REPORT_PROTOCOL.md`'s "block
+that goes into an agent body" into the brief, with the path from the convention
+above in place of its default. Reference the block; do not restate its
+skeleton-first, append-as-you-go procedure in fresh wording. A reply is lost if
+the agent goes idle; a file is not - which is why this skill reads the report
+file rather than `fleet-qa-loop`'s `AGENT_VERDICT` message. The two loops use
+different completion channels on purpose, not by accidental drift.
 
 **[relay] Invite abstention.** State in every brief: *"If you cannot verify a
 finding, mark it UNCERTAIN in the report rather than asserting or omitting it."*
-An unverified finding marked uncertain is more useful than a confident guess, and
-it is what lets the orchestrator weight it correctly at Step 5.
+`SKILL_CHECKLIST.md`'s Self-verification section owns the rule this rests on
+("an unverified claim marked uncertain is more useful than a confident guess");
+reference it. Here it is also what lets the orchestrator weight the finding
+correctly at Step 5.
 
-Give each brief the target paths, the report file path, and the standard the round
-is auditing against (`SKILL_CHECKLIST.md` for skills). **State the standard; an
-agent will not infer it.**
+Give each brief the target paths, the report file path (the convention above),
+and the standard the round is auditing against (`SKILL_CHECKLIST.md` for
+skills). **State the standard; an agent will not infer it.**
 
 ## Step 4 - Dispatch, then verify on disk
 
@@ -169,10 +191,9 @@ that fails, the fix step writes the check as well as the fix, under `scripts/`.
 
 - A gate: `check-skills.sh` compares `src/<name>/` against the built archive and
   exits non-zero when they differ. It can fail, so its passing means something.
-- Not a gate: a `ctest` invocation whose regex matched nothing and exited 0. It
-  passed having run no tests, and was read as coverage. **A check that cannot fail
-  is worse than none.** Confirm a new check reports failure on a broken input
-  before claiming it as a gate.
+- Not a gate: a `ctest` invocation whose regex matched nothing and exited 0,
+  read as coverage. `SKILL_CHECKLIST.md`'s Self-verification section owns the
+  rule this incident produced; reference it, do not restate it.
 
 **Not every invariant is mechanisable.** Of the eleven occurrences, one was a
 briefing error and one was domain knowledge; neither is expressible as a script.
