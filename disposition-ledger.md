@@ -29,6 +29,10 @@ A markdown table in a tracked file (`docs/disposition-ledger.md`, or a per-branc
 
 IDs follow `<source-agent>-<n>`, sequential per source. Severity and Finding copy the auditor's own wording verbatim rather than being paraphrased when transcribed. Rows are written the moment a finding is dispositioned, not batched to the end of a session, so an interrupted review leaves a partial ledger on disk rather than an empty one.
 
+## Carrying rejections into the next round
+
+In a multi-round audit, the orchestrator carries the ledger's rejected rows into the next round's brief with their evidence, so the same non-defect is not re-investigated round after round. A row whose evidence cites a file that has since been edited is reopened rather than carried. This is the deliberate exception to the rule that instance-level prior findings do not belong in an auditor's brief: the disproved list removes ground from the search rather than directing it. A dispatched auditor cannot invoke a skill, so this list only reaches it if the orchestrator writes it into the brief.
+
 ## Licence
 
 MIT
