@@ -98,10 +98,18 @@ for name in "${names[@]}"; do
   [ -f "$dest_dir/$name/SKILL.md" ] || continue
 
   mkdir -p "$archive_dir"
+  # Never overwrite an existing archive entry: a second run on the same day
+  # would otherwise destroy the copy the first run made. Suffix instead.
+  dest="$archive_dir/$name.md"
+  n=1
+  while [ -e "$dest" ]; do
+    dest="$archive_dir/$name.$n.md"
+    n=$((n + 1))
+  done
   # -L resolves symlinks so the archive holds content, not a dangling pointer.
-  cp -L "$flat" "$archive_dir/$name.md"
-  if [ ! -s "$archive_dir/$name.md" ]; then
-    echo "error: archive of $name.md is empty; not removing" >&2
+  cp -L "$flat" "$dest"
+  if [ ! -s "$dest" ]; then
+    echo "error: archive of $name.md is empty ($dest); not removing" >&2
     exit 1
   fi
   rm -f "$flat"
