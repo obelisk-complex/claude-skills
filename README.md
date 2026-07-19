@@ -11,7 +11,7 @@ A collection of custom skills for Claude, built to fill gaps in the default tool
 | [3d-print-design](/3d-print-design.md) | 3D-printable parts and enclosures across FDM, resin, SLS, and metal processes. Pairs with pcb-engineer. |
 | [api-and-interface-design](/api-and-interface-design.md) | Guides stable API and interface design. Use when designing APIs, module boundaries, or any public interface. |
 | [browser-testing-with-devtools](/browser-testing-with-devtools.md) | Tests in real browsers via Chrome DevTools MCP. Inspect DOM, capture console errors, analyse network requests, profile performance, or verify visual output. |
-| [code-quality](/code-quality.md) | Language-agnostic code standards, review mode, and testing guidance. Refuses to write code it considers wrong. |
+| [code-quality](/code-quality.md) | Language-agnostic standards for writing, reviewing, and architecting code. Security-first, with a testing section on every change and a review mode that produces a downloadable findings file. |
 | [context-engineering](/context-engineering.md) | Optimises agent context setup. Use when starting a new session, when agent output quality degrades, or when switching between tasks. |
 | [copywriting](/copywriting.md) | Multi-domain writing skill: journalism, technical writing, narrative non-fiction, conversion copywriting. AI trope blacklist. Ogilvy, Schwartz, Sugarman, Hopkins, Halbert, Wiebe. |
 | [cosmos-compose](/cosmos-compose.md) | Cosmos Cloud container configs, reverse proxy routes, OpenID/SSO, and platform administration. |
@@ -26,11 +26,12 @@ A collection of custom skills for Claude, built to fill gaps in the default tool
 | [frontend-design](/frontend-design.md) | UX-first frontend interfaces with WCAG 2.2 AA, Nielsen's heuristics, minimalist design, and an AI tropes blacklist. Replaces the built-in skill. |
 | [git-workflow-and-versioning](/git-workflow-and-versioning.md) | Structures git workflow practices: commit discipline, branching, release management, and semantic versioning. |
 | [github-actions](/github-actions.md) | CI/CD workflows, reusable workflows, composite actions, and custom actions with security baked in. |
-| [idea-refine](/idea-refine.md) | Refines raw ideas into sharp, actionable concepts through structured divergent and convergent thinking. |
+| [idea-refine](/idea-refine.md) | Refines raw ideas into sharp, actionable concepts through structured divergent and convergent thinking. Hands the sharpened idea to spec-driven-development. |
 | [incremental-implementation](/incremental-implementation.md) | Delivers changes incrementally in thin vertical slices. Implements one piece, tests it, verifies it, then expands. |
 | [model-bakeoff](/model-bakeoff.md) | Compares models or prompts against ground truth without producing a number that looks like evidence and is not. Do-nothing baselines, failure accounting, measured cost, repeat runs. |
+| [negative-controls](/negative-controls.md) | A control earns trust only once you've watched it fail: tests, lint rules, CI gates, feature flags, ignore rules, runbook checks. Catches the grep for a string that never appears, the gate that never closes, the assertion too weak to tell two bugs apart, the fixture neutered before the code sees it, the documented control with no implementation. |
 | [observability-and-instrumentation](/observability-and-instrumentation.md) | Instruments code so production behaviour is visible and diagnosable through logging, metrics, tracing, and alerting. |
-| [pcb-engineer](/pcb-engineer.md) | Full PCB design lifecycle from consulting through manufacturing prep. KiCad 8+, educational by default. |
+| [pcb-engineer](/pcb-engineer.md) | Full PCB design lifecycle from consulting through manufacturing prep. KiCad 9+, educational by default. |
 | [performance-optimization](/performance-optimization.md) | Optimises application performance. Measures before optimising, identifies bottlenecks, fixes, and guards against regression. |
 | [planning-and-task-breakdown](/planning-and-task-breakdown.md) | Breaks work into ordered, verifiable tasks with explicit acceptance criteria and dependency graphs. |
 | [readme-conventions](/readme-conventions.md) | Section order, benefit-before-mechanism ordering, disclosure blocks, badge honesty, and screenshot policy for README authoring. |
@@ -39,7 +40,7 @@ A collection of custom skills for Claude, built to fill gaps in the default tool
 | [shipping-and-launch](/shipping-and-launch.md) | Prepares production launches with pre-launch checklists, feature flag strategy, staged rollout, monitoring, and rollback plans. |
 | [songwriting](/songwriting.md) | Structures and polishes songs and lyrics, and formats them for a text-to-music generator. Carries a craft reference, a blocked-words list, and the operator's own voice reference. |
 | [source-driven-development](/source-driven-development.md) | Grounds every implementation decision in official documentation. Cites sources for all framework-specific code. |
-| [spec-driven-development](/spec-driven-development.md) | Creates structured specifications before writing code. Four-phase gated workflow: specify, plan, task, implement. |
+| [spec-driven-development](/spec-driven-development.md) | Creates structured specifications before writing code. Four-phase gated workflow: specify, plan, task, implement. Defers to idea-refine when the input is still a vague idea. |
 | [svg-illustrator](/svg-illustrator.md) | Hand-author stylised SVG illustrations (covers, figures, icons) that read clearly and survive print-PDF rendering. Silhouette library, atmospheric perspective, composition rules, WeasyPrint support matrix, a11y and sanitisation baseline. |
 | [test-driven-development](/test-driven-development.md) | Drives development with tests. Write a failing test before making it pass. For bug fixes, reproduce with a test first. |
 | [upstream-prs-to-hermes-agent](/upstream-prs-to-hermes-agent.md) | Sends a change from a fork up to NousResearch/hermes-agent. Their CONTRIBUTING rules (and the one that is wrong), the contributor-check gate, the non-hermetic suite, and why the human opens the PR. |
