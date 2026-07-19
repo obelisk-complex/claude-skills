@@ -45,6 +45,8 @@ Two complementary approaches — use both:
 - **Synthetic (Lighthouse, DevTools Performance tab):** Controlled conditions, reproducible. Best for CI regression detection and isolating specific issues.
 - **RUM (web-vitals library, CrUX):** Real user data in real conditions. Required to validate that a fix actually improved user experience.
 
+For the browser-side measurement itself (driving Lighthouse, capturing a Performance trace, or reading Core Web Vitals off a live page), use `browser-testing-with-devtools`, which runs these against a real browser via the Chrome DevTools MCP.
+
 **Frontend:**
 ```bash
 # Synthetic: Lighthouse in Chrome DevTools (or CI)

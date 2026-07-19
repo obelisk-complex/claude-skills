@@ -1,6 +1,6 @@
 ---
 name: spec-driven-development
-description: Creates specs before coding. Use when starting a new project, feature, or significant change and no specification exists yet. Use when requirements are unclear, ambiguous, or only exist as a vague idea.
+description: Creates specs before coding. Use when starting a new project, feature, or significant change and no specification exists yet. Use when requirements are unclear or ambiguous.
 ---
 
 # Spec-Driven Development
@@ -18,6 +18,8 @@ Write a structured specification before writing any code. The spec is the shared
 - The task would take more than 30 minutes to implement
 
 **When NOT to use:** Single-line fixes, typo corrections, or changes where requirements are unambiguous and self-contained.
+
+If the input is still a genuinely vague idea rather than unclear-but-real requirements, run `idea-refine` first: it is the earlier stage that sharpens a raw idea into something a spec can be written against.
 
 ## The Gated Workflow
 
