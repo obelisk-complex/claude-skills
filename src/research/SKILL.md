@@ -71,7 +71,7 @@ If either check cannot be run (no `curl`, no shell access, a WebFetch-only envir
 
 ## House sources
 
-1. **Your local wiki** (`<WIKI_ROOT>`) is the source of truth. Consult it before any web search.
+1. **Run `wiki-first` before any web search.** It queries the local wiki corpus (`<WIKI_ROOT>`) and returns a verdict to act on: `ANSWERED` is a checked, cited answer that needs no web search; `PARTIAL` sends you to the web only for the parts it lists as unestablished; `COULD_NOT_ESTABLISH` means search now. See `wiki-first` for the query and verdict handling; don't restate its mechanism here.
 2. **Brave Search** for web queries where the wiki has no coverage. The key lives in `<SEARCH_KEY_FILE>` as `BRAVE_SEARCH_API_KEY`:
    ```bash
    curl -s -H "X-Subscription-Token: $BRAVE_SEARCH_API_KEY" \

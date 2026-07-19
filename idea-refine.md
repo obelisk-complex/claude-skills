@@ -14,6 +14,8 @@ Refines raw ideas into sharp, actionable concepts worth building through structu
 2.  **Evaluate & Converge:** Cluster ideas, stress-test them, and surface hidden assumptions.
 3.  **Sharpen & Ship:** Produce a concrete markdown one-pager moving work forward.
 
+Once an idea is sharp enough to build, `spec-driven-development` is the next stage: it turns the refined concept into a structured engineering spec before any code.
+
 ## Usage
 
 This skill is primarily an interactive dialogue. Invoke it with an idea, and the agent will guide you through the process.

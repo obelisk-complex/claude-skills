@@ -189,38 +189,11 @@ paths:
 
 ## README Structure
 
-Every project should have a README that covers:
-
-```markdown
-# Project Name
-
-One-paragraph description of what this project does.
-
-## Quick Start
-1. Clone the repo
-2. Install dependencies: `npm install`
-3. Set up environment: `cp .env.example .env`
-4. Run the dev server: `npm run dev`
-
-## Commands
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server |
-| `npm test` | Run tests |
-| `npm run build` | Production build |
-| `npm run lint` | Run linter |
-
-## Architecture
-Brief overview of the project structure and key design decisions.
-Link to ADRs for details.
-
-## Contributing
-How to contribute, coding standards, PR process.
-```
+For README shape (section order, what to include, and what to leave out) follow `readme-conventions`, the actively-maintained authority on it. This skill's own territory is the decision and inline-why record: ADRs, rationale, and gotchas.
 
 ## Changelog Maintenance
 
-For shipped features:
+`git-workflow-and-versioning` owns the changelog conventions: grouping by impact, version derivation, and writing each entry with its change. For shipped features:
 
 ```markdown
 # Changelog

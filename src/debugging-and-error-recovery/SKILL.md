@@ -137,7 +137,7 @@ Ask: "Why does this happen?" until you reach the actual cause, not just where it
 
 ### Step 5: Guard Against Recurrence
 
-Write a test that catches this specific failure:
+Lock the fix in with a regression test, following `test-driven-development`'s Prove-It Pattern: write the test, watch it fail without the fix, then confirm it passes with the fix.
 
 ```typescript
 // The bug: task titles with special characters broke the search
@@ -149,7 +149,7 @@ it('finds tasks with special characters in title', async () => {
 });
 ```
 
-This test will prevent the same bug from recurring. It should fail without the fix and pass with it.
+This regression test prevents the same bug from recurring.
 
 ### Step 6: Verify End-to-End
 
