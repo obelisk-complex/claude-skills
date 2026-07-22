@@ -45,9 +45,9 @@ If a task doesn't clearly fit a row, default to Sonnet and escalate only the spe
 
 ## Sourcing gate
 
-Every factual claim carries a URL the agent actually fetched, not one it constructed from memory or pattern-matched from a domain's URL structure. `UNVERIFIED` is a first-class, praised outcome, not a failure to hide - a gap honestly marked is more useful than a citation that dissolves under checking. Fleet agents have fabricated plausible-looking Wayback Machine timestamps when asked for archive URLs; the same failure mode applies to any URL an agent is tempted to guess rather than fetch.
+**NO CLAIM WITHOUT A FETCHED URL AND A PASSING CONTENT-GREP.**
 
-## Verification procedure
+Every factual claim carries a URL the agent actually fetched, not one it constructed from memory or pattern-matched from a domain's URL structure. `UNVERIFIED` is a first-class, praised outcome, not a failure to hide - a gap honestly marked is more useful than a citation that dissolves under checking. Fleet agents have fabricated plausible-looking Wayback Machine timestamps when asked for archive URLs; the same failure mode applies to any URL an agent is tempted to guess rather than fetch.
 
 HTTP 200 alone proves nothing - many sites soft-404 (serve a templated "not found" page with a 200 status). Two checks, both required, before a claim is marked verified:
 
@@ -68,6 +68,8 @@ curl -s "https://example.com/real-page" | grep -io "the specific claimed fact or
 No match means the page doesn't say what's being cited - downgrade to `UNVERIFIED` or drop the claim, don't keep the citation.
 
 If either check cannot be run (no `curl`, no shell access, a WebFetch-only environment), say so explicitly in the output rather than reporting the claim as verified anyway.
+
+Skipping either check means the claim is unverified, not verified-with-caveats.
 
 ## House sources
 
@@ -97,19 +99,6 @@ When dispatching multiple research subagents:
 - Give each one the specific paths or domains in scope, the question its findings need to answer, an **output file path** to append to, and the sourcing gate above spelled out - never "based on your findings, fix it."
 - Grant the subagent Write access. Without it, a subagent with a long finding has no way to persist it and either truncates or dumps it inline, which is worse for everyone reading the result.
 - State the model per dispatch (from the table above) rather than leaving it to inherit by default. Prefer `house-researcher` (loads our definition) over the built-in `researcher` (does not).
-
-## Verification Gate (Iron Law)
-
-**NO CLAIM WITHOUT A FETCHED URL AND A PASSING CONTENT-GREP**
-
-Before reporting any factual claim:
-1. **IDENTIFY** the specific URL that supports it.
-2. **FETCH** that URL directly - don't trust a cached summary or a URL built from pattern.
-3. **RUN** the control-slug test on that domain if status codes matter to the claim.
-4. **GREP** the fetched body for the actual claimed fact.
-5. **ONLY THEN** report it as verified; otherwise mark `UNVERIFIED` and say what's missing.
-
-Skipping any step means the claim is unverified, not verified-with-caveats.
 
 ## Red Flags - STOP
 

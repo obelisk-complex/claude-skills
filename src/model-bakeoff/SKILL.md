@@ -116,7 +116,7 @@ In the report:
   [ ] collapsed items, fabrication rate, failures - each as its own number
 ```
 
-## Rationalizations
+## Rationalisations
 
 | Excuse | Reality |
 |---|---|
