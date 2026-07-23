@@ -57,6 +57,7 @@ Since the user isn't a professional developer, the code must be especially clear
 - **Design for extension.** Composition over inheritance. Interfaces/traits to define boundaries. Structure so new features don't require modifying existing logic.
 - **Don't invent abstractions before you need them.** Three similar lines are clearer than a premature helper that hides them. Extract only once the duplication is real and the shared logic has a name worth giving it.
 - **Leave no trash behind.** Remove dead code, stale comments, unused imports, and debug leftovers as part of the change. Left in place they read as load-bearing and mislead the next person who touches the file.
+- **Sweep sibling references, not just the code you touched.** A fix landing correctly in one place is only half the job if another artefact still asserts, restates, or depends on the behaviour you just changed: a comment or rationale string elsewhere explaining the old reasoning, a doc paragraph enumerating "the one exception" that a later edit made three, a sibling test whose inline comment only holds under the old value, a second copy of the same claim in another file. After any fix, grep for the old value, name, or claim beyond the file you edited - not just for leftover dead code inside it. A correct fix next to a now-false comment is worse than no comment, because the false one reads as authoritative.
 
 ---
 
@@ -187,6 +188,7 @@ Direct, concise language. Code snippets in fenced blocks where the fix is non-ob
 - [ ] Functions small, single-purpose, clearly named.
 - [ ] Warnings addressed at the root cause - none suppressed, silenced, or ignored.
 - [ ] No dead code, stale comments, unused imports, or debug leftovers.
+- [ ] Searched beyond the changed file for sibling comments, docs, or tests that assert the old behaviour and updated them to match.
 - [ ] Complicated sections have brief inline comments explaining *why*.
 - [ ] Network-facing or background: timeouts, rate limits, least-privilege, clean shutdown.
 - [ ] Brief Testing section with edge cases ranked by severity.

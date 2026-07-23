@@ -18,7 +18,7 @@ Designed for users who are not professional developers but rely on Claude to mak
 - **Error handling**: three-tier model (dev: crash loudly, prod-fatal: surface for bug reports, prod-non-fatal: log and continue)
 - **Code review mode**: structured audit producing a downloadable markdown recommendations file. Begin by noting what works well. Then report findings ordered by severity (security > bugs > efficiency > maintainability > style), each in situation-behaviour-impact format.
 - **Testing guidance**: edge cases ranked by severity with concrete test commands and pass criteria
-- **Pre-presentation checklist**: 11 verification items to run through before presenting code
+- **Pre-presentation checklist**: 17 verification items to run through before presenting code
 
 ## Key design decisions
 
@@ -58,6 +58,7 @@ If a verification step cannot be completed, say so explicitly rather than procee
 - **Warnings are errors**: Never suppress, silence, or ignore warnings - find and fix the root cause. If the root cause is unclear, note what was tried and why it was inconclusive.
 - **Do the harder fix if it's the better fix**: Don't take shortcuts that produce a worse product
 - **Leave no trash behind**: Remove dead code, stale comments, unused imports, debug leftovers
+- **Sweep sibling references**: After a fix, grep beyond the changed file for other comments, docs, or tests that still assert the old behaviour
 - **Comment only where needed**: Explain *why* non-obvious choices were made, don't narrate what the code does
 - **Fix all severities**: Address Low and Info findings now, don't defer them
 - **Verify before trusting assumptions**: Never guess - use concrete evidence
